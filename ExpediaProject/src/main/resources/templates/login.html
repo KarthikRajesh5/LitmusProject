@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login page</title>
+    <style type="text/css">
+        form
+        {
+            width: 300px;
+            margin: 0 auto;
+
+        }
+
+        input[type=email], input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        h2 {
+            text-align: center;
+            margin: 24px 0 12px 0;
+            position: relative;
+        }
+        input[type=submit]{
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        .container {
+            padding: 8px;
+        }
+
+
+    </style>
+</head>
+<body>
+<h2>Login Page</h2>
+<h3 th:if="${param.error}" >Invalid username or password</h3>
+<div class="container" style="background-color:#f1f1f1">
+    <form th:action="@{/login}"  method="post">
+        <div>
+            Username :
+            <input type="email" name="email"/>
+        </div>
+        <div>
+            Password :
+            <input type="password" name="password"/>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+</div>
+</body>
+</html>
