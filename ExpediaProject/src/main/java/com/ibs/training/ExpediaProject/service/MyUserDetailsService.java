@@ -14,11 +14,11 @@ public class MyUserDetailsService implements UserDetailsService {
     private UserRepository repo;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        UserEntity user = repo.findByEmail(username);
+        UserEntity user = repo.findByEmail(email);
         if(user == null)
-            throw new UsernameNotFoundException("User 404");
+            throw new UsernameNotFoundException("Bad Credentials");
         return new UserPrincipal(user);
     }
 
