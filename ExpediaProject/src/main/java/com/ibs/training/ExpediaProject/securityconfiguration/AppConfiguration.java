@@ -57,6 +57,7 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter
                 .formLogin()
                 .usernameParameter("email")
                 .loginPage("/login").permitAll();
+        ;
     }
 
 

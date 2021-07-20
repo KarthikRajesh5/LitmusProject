@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Search Page</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+</head>
+<body>
+    <form th:action="@{/hotels/search}">
+        <div class="form-group">
+            Search:
+            <input type="text" name="location" required/>
+        </div>
+        <button type="submit" class="btn btn-primary">OK</button>
+    </form>
+<!--    <div>-->
+<!--        <table th:unless="${empty}">-->
+<!--            <tr th:each="hotels:${searchResults}">-->
+<!--                <td th:text="${hotels.getName()}">Hotel Name</td>-->
+<!--                <td th:text="${hotels.getStarRating()}">Star Rating</td>-->
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </div>-->
+
+</body>
+</html>

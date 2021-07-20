@@ -3,7 +3,7 @@ package com.ibs.training.ExpediaProject.VO;
 public class AddressVO {
     private String streetAddress;
     private String locality;
-    private long postalCode;
+    private String postalCode;
     private String countryName;
 
     public String getStreetAddress() {
@@ -22,11 +22,11 @@ public class AddressVO {
         this.locality = locality;
     }
 
-    public long getPostalCode() {
+    public String getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(long postalCode) {
+    public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
 

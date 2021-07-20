@@ -55,42 +55,48 @@ public class HotelSearchService {
                 LocationVO.class
         );
 
-            LocationVO locationVO=locationResponse.getBody();
-            System.out.println("location Vo"+locationVO);
+        LocationVO locationVO=locationResponse.getBody();
 
-            List<EntitiesVO> hotelListEntities= locationVO.getSuggestions()
-                    .stream()
-                    .map(SuggestionVO::getEntities)
-                    .flatMap(Collection::stream)
-                    .collect(Collectors.toList());
+        List<EntitiesVO> hotelListEntities = locationVO.getSuggestions()
+                .stream()
+                .map(SuggestionVO::getEntities)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList())
+        ;
 
-            System.out.println("hotelListEntities"+hotelListEntities.get(0).getDestinationId());
-            //getting destinationId
-            long destinationId=hotelListEntities.get(0).getDestinationId();
-            System.out.println(destinationId);
+        System.out.println("hotelListEntities"+hotelListEntities.get(0).getDestinationId());
+        //getting destinationId
+        long destinationId=hotelListEntities.get(0).getDestinationId();
+        System.out.println(destinationId);
 
-            //properties/list
-            final String searchUrl="https://hotels4.p.rapidapi.com/properties/list";
-            UriComponentsBuilder builder1 = UriComponentsBuilder.fromHttpUrl(searchUrl)
-                    .queryParam("destinationId", destinationId);
+        //properties/list
+        final String searchUrl="https://hotels4.p.rapidapi.com/properties/list";
+        UriComponentsBuilder builder1 = UriComponentsBuilder.fromHttpUrl(searchUrl)
+                .queryParam("destinationId", destinationId);
 
-            //getting response for properties/list
-            ResponseEntity<HotelVO> hotelResponse=restTemplate.exchange(
-                    builder1.toUriString(),
-                    HttpMethod.GET,
-                    entity,
-                    HotelVO.class
-            );
+        //getting response for properties/list
+        ResponseEntity<HotelVO> hotelResponse=restTemplate.exchange(
+                builder1.toUriString(),
+                HttpMethod.GET,
+                entity,
+                HotelVO.class
+        );
 
-            HotelVO hotelBody= hotelResponse.getBody();
-            System.out.println("Hotel BOdy"+hotelBody);
+        HotelVO hotelBody= hotelResponse.getBody();
+        System.out.println("Hotel BOdy"+hotelBody);
 
-            //Search results
-            List<ResultsVO> searchResults=hotelBody.getData().getBody().getSearchResults().getResults();
+        //Search results
+        List<ResultsVO> searchResults;
+        try{
+            searchResults=hotelBody.getData().getBody().getSearchResults().getResults();
             searchResults.forEach(e->System.out.println("Hotel Name : "+e.getName()+" Star Rating : "+e.getStarRating()+" "+e.getAddress()));
 
-            //return search results
-            return searchResults;
+        }catch(NullPointerException e){
+            return null;
+        }
+
+        //return search results
+        return searchResults;
 
     }
 

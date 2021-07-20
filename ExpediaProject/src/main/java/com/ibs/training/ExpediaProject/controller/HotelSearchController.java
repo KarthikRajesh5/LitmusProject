@@ -4,11 +4,12 @@ import com.ibs.training.ExpediaProject.VO.ResultsVO;
 import com.ibs.training.ExpediaProject.service.HotelSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import java.util.List;
 
@@ -22,18 +23,24 @@ public class HotelSearchController {
     public HotelSearchController(HotelSearchService hotelSearchService){
         this.hotelSearchService=hotelSearchService;
     }
-    @GetMapping("/search")
-    public String searchPage(){
-        //return search page
-        return "Search page";
+
+//    @GetMapping("/search")
+//    public String searchPage(){
+//        //return search page
+//        return "Search page";
+//    }
+
+    @RequestMapping("/search")
+    public String searchResults(@RequestParam(defaultValue ="default") String location,Model model){
+        if(!location.equals("default")) {
+            List<ResultsVO> searchResult = hotelSearchService.HotelSearch(location);
+            model.addAttribute("searchResults", searchResult);
+        }
+        else{
+            model.addAttribute("searchResults","empty");
+        }
+        return "results";
     }
 
-    @PostMapping("/search")
-    public ModelAndView searchResults(@RequestParam String location){
-        List<ResultsVO> searchResult=hotelSearchService.HotelSearch(location);
-        ModelAndView model=new ModelAndView("HotelSearchResults");
-        model.addObject(searchResult);
-        return model;
-    }
 
 }
