@@ -1,7 +1,6 @@
 package com.ibs.training.ExpediaProject.securityconfiguration;
 
 import com.ibs.training.ExpediaProject.service.UserService;
-import org.hibernate.bytecode.enhance.internal.tracker.NoopCollectionTracker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,9 +10,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 
 
 @Configuration
@@ -22,6 +20,11 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter
 {
     /*@Autowired
     private UserDetailsService userDetailsService;*/
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     @Autowired
     private UserService userService;
@@ -40,7 +43,7 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -48,13 +51,12 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .authorizeRequests().antMatchers("/login","/registration").permitAll()
+                .authorizeRequests().antMatchers("/login","/registration","/hotels/search").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .usernameParameter("email")
                 .loginPage("/login").permitAll();
-        ;
     }
 
 

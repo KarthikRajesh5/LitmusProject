@@ -32,15 +32,15 @@ public class HotelSearchService {
         this.restTemplate=restTemplate;
     }
 
-    public void HotelSearch(String searchLocation){
+    public List<ResultsVO>  HotelSearch(String searchLocation){
 
         //setting Headers
         HttpHeaders header=new HttpHeaders();
         header.set("Content-Type","application/json");
-        header.set("Aceept","application/json");
+        header.set("Accept","application/json");
         header.set("X-RapidAPI-Key",key);
         header.set("X-RapidAPI-Host",host);
-        HttpEntity<String> entity=new HttpEntity<String>(header);
+        HttpEntity<String> entity=new HttpEntity<>(header);
 
         //Adding query parameters
         final String url="https://hotels4.p.rapidapi.com/locations/search";
@@ -57,42 +57,40 @@ public class HotelSearchService {
 
             LocationVO locationVO=locationResponse.getBody();
             System.out.println("location Vo"+locationVO);
-        //System.out.println(locationResponse);
-        LocationVO location =locationResponse.getBody();
-        System.out.println(location);
-        List<SuggestionVO> hotelList= location.getSuggestions();
 
-        List<EntitiesVO> hotelListEntities= location.getSuggestions()
-                .stream()
-                .map(suggestion -> suggestion.getEntities())
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+            List<EntitiesVO> hotelListEntities= locationVO.getSuggestions()
+                    .stream()
+                    .map(SuggestionVO::getEntities)
+                    .flatMap(Collection::stream)
+                    .collect(Collectors.toList());
 
-        System.out.println("hotelListEntities"+hotelListEntities.get(0).getDestinationId());
+            System.out.println("hotelListEntities"+hotelListEntities.get(0).getDestinationId());
+            //getting destinationId
+            long destinationId=hotelListEntities.get(0).getDestinationId();
+            System.out.println(destinationId);
 
-        long destinationId=hotelListEntities.get(0).getDestinationId();
-        System.out.println(destinationId);
+            //properties/list
+            final String searchUrl="https://hotels4.p.rapidapi.com/properties/list";
+            UriComponentsBuilder builder1 = UriComponentsBuilder.fromHttpUrl(searchUrl)
+                    .queryParam("destinationId", destinationId);
 
-        final String searchUrl="https://hotels4.p.rapidapi.com/properties/list";
-        UriComponentsBuilder builder1 = UriComponentsBuilder.fromHttpUrl(searchUrl)
-                .queryParam("destinationId", destinationId);
+            //getting response for properties/list
+            ResponseEntity<HotelVO> hotelResponse=restTemplate.exchange(
+                    builder1.toUriString(),
+                    HttpMethod.GET,
+                    entity,
+                    HotelVO.class
+            );
 
+            HotelVO hotelBody= hotelResponse.getBody();
+            System.out.println("Hotel BOdy"+hotelBody);
 
-        //properties/list
-        ResponseEntity<HotelVO> hotelResponse=restTemplate.exchange(
-                builder.toUriString(),
-                HttpMethod.GET,
-                entity,
-                HotelVO.class
-        );
+            //Search results
+            List<ResultsVO> searchResults=hotelBody.getData().getBody().getSearchResults().getResults();
+            searchResults.forEach(e->System.out.println("Hotel Name : "+e.getName()+" Star Rating : "+e.getStarRating()+" "+e.getAddress()));
 
-        HotelVO hotelBody= hotelResponse.getBody();
-        System.out.println(hotelBody);
-
-        List<ResultsVO> searchResults=hotelBody.getData().getBody().getSearchResults().getResults();
-        searchResults.stream().forEach(e->System.out.println("Hotel Name : "+e.getName()+" Star Rating : "+e.getStarRating()+" "+e.getAddress()));
-
-        //return location;
+            //return search results
+            return searchResults;
 
     }
 
