@@ -1,65 +1,69 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+
+    <meta charset="ISO-8859-1">
     <title>Login page</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
-    <style type="text/css">
-        .container{
-            width:500px;
-            margin:auto;
-        }
-        form
-        {
-            width: 300px;
-            margin: 0 auto;
-            padding-top:10px;
-            padding-bottom: 10px;
-
-        }
-
-        input[type=email], input[type=password] {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-        h2 {
-            text-align: center;
-            margin: 24px 0 12px 0;
-            position: relative;
-        }
-
-
-
-    </style>
 </head>
 <body>
-<h2>Login Page</h2>
-<h3 th:if="${param.error}" >Invalid username or password</h3>
-<div class="container" style="background-color:#f1f1f1">
-        <form th:action="@{/login}"  method="post">
-            <div class="form-group">
-                Username :
-                <input type="email" name="email" required/>
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Expedia Login</a>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+
+            <div th:if="${param.error}">
+                <div class="alert alert-info">Invalid username or password</div>
             </div>
-            <div class="form-group">
-                Password :
-                <input type="password" name="password" required/>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-            <span>
-                New User?
-                <a href="/" th:href="@{/registration}">Register here
+            <h1>Login Page</h1>
+
+            <form th:action="@{/login}"  method="post">
+                <div class="form-group">
+                    <label class="control-label" for="email"> Username</label> <input
+                        id="email" class="form-control" th:field="*{email}" required
+                        autofocus="autofocus" />
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label" for="password"> Password </label> <input
+                        id="password" class="form-control" type="password"
+                        th:field="*{password}" required autofocus="autofocus" />
+                </div>
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Login</button>
+                    <span>New User? <a href="/" th:href="@{/registration}">Register here
                 </a>
             </span>
-        </form>
-
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>
