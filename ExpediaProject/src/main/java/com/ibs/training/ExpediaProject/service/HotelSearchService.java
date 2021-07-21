@@ -87,13 +87,8 @@ public class HotelSearchService {
 
         //Search results
         List<ResultsVO> searchResults;
-        try{
             searchResults=hotelBody.getData().getBody().getSearchResults().getResults();
             searchResults.forEach(e->System.out.println("Hotel Name : "+e.getName()+" Star Rating : "+e.getStarRating()+" "+e.getAddress()));
-
-        }catch(NullPointerException e){
-            return null;
-        }
 
         //return search results
         return searchResults;

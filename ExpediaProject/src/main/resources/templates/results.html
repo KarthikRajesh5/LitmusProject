@@ -67,8 +67,9 @@
 
         <table th:th:unless="${#lists.isEmpty(searchResults)}">
             <tr th:each="hotels:${searchResults}">
-                <td th:text="${hotels.getName()}">
-                <td th:text="${hotels.getStarRating()}">
+                <td th:text="${hotels.getName()}"/>
+                <td th:text="${hotels.getStarRating()}"/>
+                <td th:text="${hotels.getAddress()}"/>
             </tr>
         </table>
 </div>
