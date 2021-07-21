@@ -1,6 +1,7 @@
 package com.ibs.training.ExpediaProject.controller;
 
 import com.ibs.training.ExpediaProject.VO.FlightsVO;
+import com.ibs.training.ExpediaProject.service.FlightSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
