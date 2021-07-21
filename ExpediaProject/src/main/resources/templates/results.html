@@ -40,7 +40,7 @@
                 <div class="form-group">
                     <label class="control-label" for="location"> Search</label>
                     <input
-                        id="location" class="form-control" th:f required
+                        id="location" class="form-control"     required
                         autofocus="autofocus" name="location"/>
                 </div>
                 <div class="form-group">
@@ -50,18 +50,18 @@
         </div>
     </div>
 
-        <table class="table table-striped table-bordered"
-                th:th:unless="${#lists.isEmpty(searchResults)}">
-            <tr th:each="hotels:${searchResults}">
-                <td th:text="${hotels.getName()}"/>
-                <td th:text="${hotels.getStarRating()}"/>
-                <td th:text="${hotels.getAddress()}"/>
+<!--        <table class="table table-striped table-bordered"-->
+<!--                th:th:if="${searchResults != null}">-->
+<!--            <tr th:each="hotels:${searchResults}">-->
+<!--                <td th:text="${hotels.getName()}"/>-->
+<!--                <td th:text="${hotels.getStarRating()}"/>-->
+<!--                <td th:text="${hotels.getAddress()}"/>-->
 <!--                <form th:action="@{/hotels/view}">-->
 <!--                    <input type="hidden" th:field="${hotels.getId()}"/>-->
 <!--                    <button type="submit">View Hotel</button>-->
 <!--                </form>-->
-            </tr>
-        </table>
+<!--            </tr>-->
+<!--        </table>-->
 </div>
 </body>
 </html>

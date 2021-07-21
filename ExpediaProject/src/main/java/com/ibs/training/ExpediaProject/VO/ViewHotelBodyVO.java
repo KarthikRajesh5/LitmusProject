@@ -1,7 +1,9 @@
 package com.ibs.training.ExpediaProject.VO;
 
 public class ViewHotelBodyVO {
+
     private ViewHotelOverviewVO overview;
+
     private PropertyDescriptionVO propertyDescription;
 
     public ViewHotelOverviewVO getOverview() {

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/hotels")
@@ -26,21 +26,23 @@ public class HotelSearchController {
 
     @RequestMapping("/search")
     public String searchResults(@RequestParam(defaultValue ="default") String location,Model model){
+        List<ResultsVO> searchResult = null;
         if(!location.equals("default")) {
-            List<ResultsVO> searchResult = hotelSearchService.HotelSearch(location);
+            searchResult = hotelSearchService.HotelSearch(location);
             model.addAttribute("searchResults", searchResult);
         }
         else{
-            model.addAttribute("searchResults",new ArrayList() );
+            model.addAttribute("searchResults", null);
         }
         return "results";
     }
 
     @PostMapping("/view")
-    public void viewHotel(@RequestParam(required = false) String id){
+    public String viewHotel(@RequestParam(required = false) String id){
+        //get address , hotel name , StarRating as request parameter
         id="454945";
         hotelSearchService.viewHotel(id);
-        //return "";
+        return "viewHotel";
     }
 
 }

@@ -1,20 +1,21 @@
 package com.ibs.training.ExpediaProject.VO;
 
 public class ViewHotelCurrentPriceVO {
-    private String formatted;
 
-    public String getFormatted() {
-        return formatted;
+    private String plain;
+
+    public String getPlain() {
+        return plain;
     }
 
-    public void setFormatted(String formatted) {
-        this.formatted = formatted;
+    public void setPlain(String plain) {
+        this.plain = plain;
     }
 
     @Override
     public String toString() {
         return "ViewHotelCurrentPriceVO{" +
-                "formatted='" + formatted + '\'' +
+                "plain='" + plain + '\'' +
                 '}';
     }
 }
