@@ -53,6 +53,10 @@
                 <td th:text="${hotels.getName()}"/>
                 <td th:text="${hotels.getStarRating()}"/>
                 <td th:text="${hotels.getAddress()}"/>
+<!--                <form th:action="@{/hotels/view}">-->
+<!--                    <input type="hidden" th:field="${hotels.getId()}"/>-->
+<!--                    <button type="submit">View Hotel</button>-->
+<!--                </form>-->
             </tr>
         </table>
 </div>

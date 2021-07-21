@@ -2,6 +2,7 @@ package com.ibs.training.ExpediaProject.VO;
 
 public class ResultsVO {
     private String name;
+    private long id;
     private Double starRating;
     private AddressVO address;
 
@@ -27,6 +28,14 @@ public class ResultsVO {
 
     public void setAddress(AddressVO addressVO) {
         this.address = addressVO;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override

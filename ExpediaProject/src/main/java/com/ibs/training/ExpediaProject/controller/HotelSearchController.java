@@ -5,6 +5,7 @@ import com.ibs.training.ExpediaProject.service.HotelSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,12 +24,6 @@ public class HotelSearchController {
         this.hotelSearchService=hotelSearchService;
     }
 
-//    @GetMapping("/search")
-//    public String searchPage(){
-//        //return search page
-//        return "Search page";
-//    }
-
     @RequestMapping("/search")
     public String searchResults(@RequestParam(defaultValue ="default") String location,Model model){
         if(!location.equals("default")) {
@@ -39,6 +34,13 @@ public class HotelSearchController {
             model.addAttribute("searchResults",new ArrayList() );
         }
         return "results";
+    }
+
+    @PostMapping("/view")
+    public void viewHotel(@RequestParam(required = false) String id){
+        id="454945";
+        hotelSearchService.viewHotel(id);
+        //return "";
     }
 
 }

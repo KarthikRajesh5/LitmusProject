@@ -87,11 +87,53 @@ public class HotelSearchService {
 
         //Search results
         List<ResultsVO> searchResults;
-            searchResults=hotelBody.getData().getBody().getSearchResults().getResults();
+            searchResults=hotelBody
+                    .getData()
+                    .getBody()
+                    .getSearchResults()
+                    .getResults()
+            ;
+
             searchResults.forEach(e->System.out.println("Hotel Name : "+e.getName()+" Star Rating : "+e.getStarRating()+" "+e.getAddress()));
 
         //return search results
         return searchResults;
+
+    }
+
+    //--------------View Hotel ------------------//
+    public void viewHotel(String id){
+
+        //setting Headers
+        HttpHeaders header=new HttpHeaders();
+        header.set("Content-Type","application/json");
+        header.set("Accept","application/json");
+        header.set("X-RapidAPI-Key",key);
+        header.set("X-RapidAPI-Host",host);
+        HttpEntity<String> entity=new HttpEntity<>(header);
+
+        //Adding query parameters
+        final String url="https://hotels4.p.rapidapi.com/properties/get-details";
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("id",id);
+
+        //getting response from API
+        ResponseEntity<ViewHotelVO> viewHotelResponse=restTemplate.exchange(
+                builder.toUriString(),
+                HttpMethod.GET,
+                entity,
+                ViewHotelVO.class
+        );
+        ViewHotelVO viewHotelVO=viewHotelResponse.getBody();
+
+        List<ViewHotelOverviewSectionsVO> overviewSectionsList=viewHotelVO
+                .getData()
+                .getBody()
+                .getOverview()
+                .getOverviewSections()
+        ;
+
+        System.out.println(overviewSectionsList);
 
     }
 
