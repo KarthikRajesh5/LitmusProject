@@ -40,11 +40,8 @@ public class AddressVO {
 
     @Override
     public String toString() {
-        return "Address:" +
-                streetAddress + '\'' +
-                locality + '\'' +"  PostalCode : "+
-                postalCode + " Country Name : "+
-                countryName
-                ;
+        return
+                ""+streetAddress+" "+locality+" "+postalCode;
+
     }
 }
