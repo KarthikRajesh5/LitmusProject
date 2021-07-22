@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,7 +70,7 @@ public class HotelServiceImplementation implements HotelServices{
                 LocationVO.class
         );
 
-        if (locationResponse.getStatusCode().is2xxSuccessful() && locationResponse.getBody().getSuggestions().isEmpty()) {
+        if (locationResponse.getStatusCode().is2xxSuccessful()) {
             LocationVO locationVO = locationResponse.getBody();
 
             System.out.println(locationResponse);

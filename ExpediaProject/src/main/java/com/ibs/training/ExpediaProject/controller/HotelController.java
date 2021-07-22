@@ -28,18 +28,18 @@ public class HotelController {
     //Hotel Search
     @RequestMapping("/search")
     public String searchResults(@RequestParam(defaultValue ="default") String location,Model model){
-        List<ResultsVO> searchResult;
+        List<ResultsVO> searchResult = null;
         if(!location.equals("default")) {
             searchResult = hotelSearchService.HotelSearch(location);
             if (searchResult != null) {
                 model.addAttribute("searchResults", searchResult);
             }
             else {
-                model.addAttribute("error-message","Invalid search key");
+                model.addAttribute("error_message",true);
             }
         }
         else{
-            model.addAttribute("searchResults", null);
+            model.addAttribute("searchResults", searchResult);
         }
         return "results";
     }
