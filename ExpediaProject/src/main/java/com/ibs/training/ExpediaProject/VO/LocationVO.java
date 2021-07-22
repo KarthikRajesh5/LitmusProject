@@ -7,6 +7,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LocationVO {
     private List<SuggestionVO> suggestions;
+    String term;
+    String moresuggestions;
 
     public List<SuggestionVO> getSuggestions() {
         return suggestions;
@@ -16,10 +18,28 @@ public class LocationVO {
         this.suggestions = suggestions;
     }
 
+    public String getTerm() {
+        return term;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
+    }
+
+    public String getMoresuggestions() {
+        return moresuggestions;
+    }
+
+    public void setMoresuggestions(String moresuggestions) {
+        this.moresuggestions = moresuggestions;
+    }
+
     @Override
     public String toString() {
-        return "Hotel{" +
+        return "LocationVO{" +
                 "suggestions=" + suggestions +
+                ", term='" + term + '\'' +
+                ", moresuggestions='" + moresuggestions + '\'' +
                 '}';
     }
 }
