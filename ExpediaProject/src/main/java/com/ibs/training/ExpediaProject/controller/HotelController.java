@@ -27,7 +27,13 @@ public class HotelController {
 
     //Hotel Search
     @RequestMapping("/search")
-    public String searchResults(@RequestParam(defaultValue ="default") String location,Model model){
+    public String searchResults(@RequestParam(defaultValue ="default") String location,
+                                @RequestParam(required = false) String checkin,
+                                @RequestParam(required=false)  String checkout,
+                                @RequestParam(required=false)  String travellers,
+                                Model model){
+
+        System.out.println(location+" "+checkin+" "+checkout+" "+travellers);
         List<ResultsVO> searchResult = null;
         if(!location.equals("default")) {
             searchResult = hotelSearchService.HotelSearch(location);
@@ -41,21 +47,20 @@ public class HotelController {
         else{
             model.addAttribute("searchResults", searchResult);
         }
-        return "results";
+        return "hotelresults";
     }
 
     //View Hotel Details
     @RequestMapping("/view")
-    public String viewHotel(@RequestParam(required = false) String id,
-                            @RequestParam(required=false) String hotelName,
-                            @RequestParam(required = false) String starRating,
-                            @RequestParam(required=false) String address) {
+    public String viewHotel(@RequestParam String id,
+                            @RequestParam String hotelName,
+                            @RequestParam String starRating,
+                            @RequestParam String address) {
         //get address , hotel name , StarRating, image url as request parameter
-        id="454945";//id from ResultsVo
+        System.out.println(id +" "+hotelName+" "+starRating+" "+address);
         hotelSearchService.viewHotel(id);
         return "viewHotel";
     }
-
 
 
     //Booking
