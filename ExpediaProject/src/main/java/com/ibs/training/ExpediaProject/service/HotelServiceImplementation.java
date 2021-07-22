@@ -70,11 +70,10 @@ public class HotelServiceImplementation implements HotelServices{
                 LocationVO.class
         );
 
-        if (locationResponse.getStatusCode().is2xxSuccessful()) {
-            LocationVO locationVO = locationResponse.getBody();
+        if (locationResponse.getStatusCode().is2xxSuccessful() &&
+                Integer.parseInt(locationResponse.getBody().getMoresuggestions())!=0) {
 
-            System.out.println(locationResponse);
-            System.out.println(locationVO);
+            LocationVO locationVO = locationResponse.getBody();
 
             List<EntitiesVO> hotelListEntities = locationVO.getSuggestions()
                     .stream()
