@@ -1,7 +1,8 @@
 package com.ibs.training.ExpediaProject.controller;
 
 import com.ibs.training.ExpediaProject.VO.ResultsVO;
-import com.ibs.training.ExpediaProject.service.HotelSearchService;
+import com.ibs.training.ExpediaProject.dto.HotelBookingDTO;
+import com.ibs.training.ExpediaProject.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,21 +17,26 @@ import java.util.List;
 @RequestMapping("/hotels")
 public class HotelController {
 
-    HotelSearchService hotelSearchService;
+    HotelService hotelSearchService;
 
     @Autowired
-    public HotelController(HotelSearchService hotelSearchService){
+    public HotelController(HotelService hotelSearchService){
         this.hotelSearchService=hotelSearchService;
     }
 
 
     //Hotel Search
-    @PostMapping("/search")
+    @RequestMapping("/search")
     public String searchResults(@RequestParam(defaultValue ="default") String location,Model model){
-        List<ResultsVO> searchResult = null;
+        List<ResultsVO> searchResult;
         if(!location.equals("default")) {
             searchResult = hotelSearchService.HotelSearch(location);
-            model.addAttribute("searchResults", searchResult);
+            if (searchResult != null) {
+                model.addAttribute("searchResults", searchResult);
+            }
+            else {
+                model.addAttribute("error-message","Invalid search key");
+            }
         }
         else{
             model.addAttribute("searchResults", null);
@@ -40,14 +45,28 @@ public class HotelController {
     }
 
     //View Hotel Details
-    @PostMapping("/view")
-    public String viewHotel(@RequestParam(required = false) String id){
-        //get address , hotel name , StarRating, imgage url as request parameter
-        id="454945";
+    @RequestMapping("/view")
+    public String viewHotel(@RequestParam(required = false) String id,
+                            @RequestParam(required=false) String hotelName,
+                            @RequestParam(required = false) String starRating,
+                            @RequestParam(required=false) String address) {
+        //get address , hotel name , StarRating, image url as request parameter
+        id="454945";//id from ResultsVo
         hotelSearchService.viewHotel(id);
         return "viewHotel";
     }
 
+
+
     //Booking
+    @PostMapping("/booking")
+    public void hotelBooking(HotelBookingDTO hotelBookingDTO,Model model){
+        /* ->incoming details stored to HotelBookingDTO
+        *  ->find the logged in username
+        *  and set it to the HotelBooking DTO(using Spring Security)
+        *  ->save it to database
+        *  ->add  "booking successfully" as message in model
+        * ->redirect to ViewHotels page and display the message  */
+    }
 
 }
