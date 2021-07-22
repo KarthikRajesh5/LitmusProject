@@ -29,11 +29,17 @@ public class FlightSearchController {
                                @RequestParam(defaultValue = "default") String departureDate,
                                Model model) {
 
+        List<FlightsVO> searchFlightResult;
+
         if (!departure.equals("default") && (!arrival.equals("default") && (!departureDate.equals("default")))) {
-            List<FlightsVO> searchFlightResult = flightSearchService.flightSearch(departure, arrival, departureDate);
-            model.addAttribute("searchFlightResults", searchFlightResult);
-        } else {
-            model.addAttribute("searchFlightResults", new ArrayList());
+            searchFlightResult = flightSearchService.flightSearch(departure, arrival, departureDate);
+            if (searchFlightResult.isEmpty()) {
+                model.addAttribute("notFound", "No Flights Available!");
+            } else {
+                model.addAttribute("searchFlightResults", searchFlightResult);
+            }
+        } else{
+            model.addAttribute("searchFlightResults", null);
         }
         return "flightSearchResults";
     }

@@ -38,15 +38,38 @@
             <input type="date" class="form-control" placeholder="Departing Date" id="departureDate"
                    name="departureDate" required>
         </div>
+        <br><br>
         <div>
-            <form id = "viewpage" th:action = "@{/viewPage}"  method="post">
-                <div class="form-group col-12">
-                    <button type="submit"  class="btn btn-success" style="float: right">Search</button>
-                </div>
-            </form>
+
+            <div class="form-group col-12">
+                <button type="submit"  class="btn btn-success" style="float: right">Search</button>
+                <!--<a href="/" th:href="@{/viewPage}" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Search</a>-->
+            </div>
+
         </div>
     </div>
 </form>
+
+<div class="row">
+    <th:block th:if="${notFound !=null}">
+        <div class="col-12">
+            <p style="text-align: center; margin-top: 30px; color: red; font-weight: bold">No Flights Available!</p>
+        </div>
+    </th:block>
+    <th:block th:if="${searchFlightResults !=null}">
+        <div class="row" style="margin-bottom: 10px">
+            <div class="col-md-6">
+                <h1 style="color: darkblue">Available Flights</h1>
+            </div>
+        </div>
+    </th:block>
+</div>
+<!--<div class="form-group">
+    <a href="/" th:href="@{/viewPage}" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Search</a>
+    &lt;!&ndash;<button type="submit" class="btn btn-success">Search</button>
+    <a href="/" th:href="@{/viewPage}"></a>&ndash;&gt;
+</div>-->
+
 <div>
     <table class="table table-sm" th:th:unless="${#lists.isEmpty(searchFlightResults)}">
 
