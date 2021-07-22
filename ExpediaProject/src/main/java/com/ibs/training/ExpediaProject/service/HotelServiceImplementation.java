@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class HotelService {
+public class HotelServiceImplementation implements HotelServices{
 
     @Value("${RapidAPI.Key}")
     private String key;
@@ -25,16 +25,28 @@ public class HotelService {
     @Value("${RapidAPI.host}")
     private String host;
 
+    //API endpoint locations/search
+    @Value("${location.search}")
+    private String locationSearchUrl;
+
+    //API endpoint properties/list
+    @Value("${properties.list}")
+    private String listPropertiesUrl;
+
+    //API endpoint properties/get-details
+    @Value("${properties.get-details}")
+    private String getDetailsUrl;
+
 
     private final RestTemplate restTemplate;
 
     @Autowired
-    public HotelService(RestTemplate restTemplate){
+    public HotelServiceImplementation(RestTemplate restTemplate){
         this.restTemplate=restTemplate;
     }
 
 //----------------------------------Hotel Search----------------------------------------------
-
+    @Override
     public List<ResultsVO> HotelSearch(String searchLocation) {
 
         //setting Headers
@@ -45,10 +57,8 @@ public class HotelService {
         header.set("X-RapidAPI-Host", host);
         HttpEntity<String> entity = new HttpEntity<>(header);
 
-        //API endpoint locations/search
-        final String url = "https://hotels4.p.rapidapi.com/locations/search";
-        //Adding query parameters
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+        //Adding query parameters to location/search url
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(locationSearchUrl)
                 .queryParam("query", searchLocation);
 
         //getting response from API
@@ -77,10 +87,8 @@ public class HotelService {
             long destinationId = hotelListEntities.get(0).getDestinationId();
             System.out.println(destinationId);
 
-            //API endpoint properties/list
-            final String searchUrl = "https://hotels4.p.rapidapi.com/properties/list";
-
-            UriComponentsBuilder builder1 = UriComponentsBuilder.fromHttpUrl(searchUrl)
+            //adding query parameters to properties/list
+            UriComponentsBuilder builder1 = UriComponentsBuilder.fromHttpUrl(listPropertiesUrl)
                     .queryParam("destinationId", destinationId);
 
             //getting response for properties/list
@@ -116,7 +124,7 @@ public class HotelService {
         }
     }
 //--------------------------------------View Hotel ------------------------------------------
-
+    @Override
     public void viewHotel(String id){
         //setting Headers
         HttpHeaders header=new HttpHeaders();
@@ -126,11 +134,8 @@ public class HotelService {
         header.set("X-RapidAPI-Host",host);
         HttpEntity<String> entity=new HttpEntity<>(header);
 
-        //API endpoint properties/get-details
-        final String url="https://hotels4.p.rapidapi.com/properties/get-details";
-
-        //Adding query parameters
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+        //Adding query parameters to properties/get-details
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getDetailsUrl)
                 .queryParam("id",id);
 
         //getting response from API

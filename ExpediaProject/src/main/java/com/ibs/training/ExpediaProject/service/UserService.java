@@ -8,4 +8,5 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends UserDetailsService {
 
     UserEntity save(UserRegistrationDto registrationDto);
+    public String getUser();
 }

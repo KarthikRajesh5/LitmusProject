@@ -2,7 +2,7 @@ package com.ibs.training.ExpediaProject.controller;
 
 import com.ibs.training.ExpediaProject.VO.ResultsVO;
 import com.ibs.training.ExpediaProject.dto.HotelBookingDTO;
-import com.ibs.training.ExpediaProject.service.HotelService;
+import com.ibs.training.ExpediaProject.service.HotelServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +17,10 @@ import java.util.List;
 @RequestMapping("/hotels")
 public class HotelController {
 
-    HotelService hotelSearchService;
+    HotelServiceImplementation hotelSearchService;
 
     @Autowired
-    public HotelController(HotelService hotelSearchService){
+    public HotelController(HotelServiceImplementation hotelSearchService){
         this.hotelSearchService=hotelSearchService;
     }
 

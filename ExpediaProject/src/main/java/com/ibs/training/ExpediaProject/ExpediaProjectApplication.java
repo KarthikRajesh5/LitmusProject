@@ -12,10 +12,4 @@ public class ExpediaProjectApplication {
 		SpringApplication.run(ExpediaProjectApplication.class, args);
 	}
 
-	//get logged in username
-	public String getUser(){
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		return auth.getName();
-	}
-
 }
