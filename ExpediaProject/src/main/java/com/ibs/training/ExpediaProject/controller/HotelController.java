@@ -15,16 +15,18 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/hotels")
-public class HotelSearchController {
+public class HotelController {
 
     HotelSearchService hotelSearchService;
 
     @Autowired
-    public HotelSearchController(HotelSearchService hotelSearchService){
+    public HotelController(HotelSearchService hotelSearchService){
         this.hotelSearchService=hotelSearchService;
     }
 
-    @RequestMapping("/search")
+
+    //Hotel Search
+    @PostMapping("/search")
     public String searchResults(@RequestParam(defaultValue ="default") String location,Model model){
         List<ResultsVO> searchResult = null;
         if(!location.equals("default")) {
@@ -37,12 +39,15 @@ public class HotelSearchController {
         return "results";
     }
 
+    //View Hotel Details
     @PostMapping("/view")
     public String viewHotel(@RequestParam(required = false) String id){
-        //get address , hotel name , StarRating as request parameter
+        //get address , hotel name , StarRating, imgage url as request parameter
         id="454945";
         hotelSearchService.viewHotel(id);
         return "viewHotel";
     }
+
+    //Booking
 
 }
