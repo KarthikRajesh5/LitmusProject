@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Hotels</title>
+</head>
+<body>
+    <h1 th:text="'Hotel Name : '+${hotelDetails.getHotelName()}"></h1>
+    <h3 th:text="'Star Rating : '+${hotelDetails.getStarRating()}"></h3>
+    <div th:each="details:${hotelDetails.getPropertyAmenities()}">
+        <p th:text="${details}"></p>
+    </div>
+</body>
+</html>
+

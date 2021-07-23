@@ -27,6 +27,7 @@
                     class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#" th:href="@{/}">Expedia HotelSearch</a>
+
         </div>
     </div>
 </nav>
@@ -56,9 +57,9 @@
                            id="checkout" autofocus="autofocus" name="checkout" placeholder="Check-out"/>
                 </div>
                 <div class="form-group ">
-                    <label class="control-label" for="travellers"> Treavellers</label>
+                    <label class="control-label" for="travellers"> Travellers</label>
                     <input type="number" class="form-control" required
-                           id="travellers" autofocus="autofocus" name="travellers" placeholder="Travellers"/>
+                           id="travellers" autofocus="autofocus" name="travellers" placeholder="Travellers" min="1"/>
                 </div>
                 <div class="form-group" style="text-align: center">
                     <button  type="submit" class="btn btn-primary">Search</button>
@@ -73,7 +74,7 @@
 
         <tr th:each="hotels:${searchResults}">
             <td>
-                <a th:href="@{/hotels/view(id=${hotels.getId()},
+                <a th:href="@{/hotels/details(id=${hotels.getId()},
                                            hotelName=${hotels.getName()},
                                            starRating=${hotels.getStarRating()},
                                            address=${hotels.getAddress()})}">
@@ -84,7 +85,7 @@
             </td>
             <td>
                 <h3 th:text="${hotels.getName()}" ></h3>
-                <h4 th:text="${hotels.getStarRating()}/5"></h4>
+                <h4 th:text="${hotels.getStarRating()}+'/5'"></h4>
                 <h4 th:text="${hotels.getAddress()}"></h4>
             </td>
         </tr>
