@@ -2,6 +2,7 @@ package com.ibs.training.ExpediaProject.controller;
 
 import com.ibs.training.ExpediaProject.VO.ResultsVO;
 import com.ibs.training.ExpediaProject.dto.HotelBookingDTO;
+import com.ibs.training.ExpediaProject.dto.HotelDTO;
 import com.ibs.training.ExpediaProject.service.HotelServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,26 +18,31 @@ import java.util.List;
 @RequestMapping("/hotels")
 public class HotelController {
 
-    HotelServiceImplementation hotelSearchService;
+    private HotelServiceImplementation hotelServiceImplementation;
+
 
     @Autowired
     public HotelController(HotelServiceImplementation hotelSearchService){
-        this.hotelSearchService=hotelSearchService;
+        this.hotelServiceImplementation =hotelSearchService;
+
     }
+
+
 
 
     //Hotel Search
     @RequestMapping("/search")
     public String searchResults(@RequestParam(defaultValue ="default") String location,
-                                @RequestParam(required = false) String checkin,
-                                @RequestParam(required=false)  String checkout,
-                                @RequestParam(required=false)  String travellers,
+                                @RequestParam(required=false) String checkin,
+                                @RequestParam(required=false) String checkout,
+                                @RequestParam(required=false) String travellers,
                                 Model model){
 
         System.out.println(location+" "+checkin+" "+checkout+" "+travellers);
+
         List<ResultsVO> searchResult = null;
         if(!location.equals("default")) {
-            searchResult = hotelSearchService.HotelSearch(location);
+            searchResult = hotelServiceImplementation.HotelSearch(location,checkin,checkout,travellers);
             if (searchResult != null) {
                 model.addAttribute("searchResults", searchResult);
             }
@@ -51,15 +57,18 @@ public class HotelController {
     }
 
     //View Hotel Details
-    @RequestMapping("/view")
+    @RequestMapping("/details")
     public String viewHotel(@RequestParam String id,
                             @RequestParam String hotelName,
                             @RequestParam String starRating,
-                            @RequestParam String address) {
+                            @RequestParam String address,
+                            Model model) {
         //get address , hotel name , StarRating, image url as request parameter
         System.out.println(id +" "+hotelName+" "+starRating+" "+address);
-        hotelSearchService.viewHotel(id);
-        return "viewHotel";
+        HotelDTO hotelDetails=hotelServiceImplementation.viewHotel(id,hotelName,starRating,address);
+        model.addAttribute("hotelDetails",hotelDetails);
+        System.out.println(hotelDetails.toString());
+        return "hoteldetails";
     }
 
 

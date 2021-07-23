@@ -1,6 +1,7 @@
 package com.ibs.training.ExpediaProject.service;
 
 import com.ibs.training.ExpediaProject.VO.*;
+import com.ibs.training.ExpediaProject.dto.HotelDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -11,10 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,17 +39,22 @@ public class HotelServiceImplementation implements HotelServices{
     @Value("${properties.get-details}")
     private String getDetailsUrl;
 
+    private HotelDTO hotelDTO;
 
     private final RestTemplate restTemplate;
 
     @Autowired
-    public HotelServiceImplementation(RestTemplate restTemplate){
+    public HotelServiceImplementation(RestTemplate restTemplate,HotelDTO hotelDTO){
         this.restTemplate=restTemplate;
+        this.hotelDTO=hotelDTO;
     }
 
 //----------------------------------Hotel Search----------------------------------------------
     @Override
-    public List<ResultsVO> HotelSearch(String searchLocation) {
+    public List<ResultsVO> HotelSearch(String searchLocation,
+                                       String checkin,
+                                       String checkout,
+                                       String travellers) {
 
         //setting Headers
         HttpHeaders header = new HttpHeaders();
@@ -73,13 +79,28 @@ public class HotelServiceImplementation implements HotelServices{
         if (locationResponse.getStatusCode().is2xxSuccessful() &&
                 Integer.parseInt(locationResponse.getBody().getMoresuggestions())!=0) {
 
+          /*
+               Converting checkin and checkout to Date type and travellers to int
+               and adding to HotelDTO class
+           */
+
+            LocalDate checkinDate=LocalDate.parse(checkin);
+            LocalDate checkoutDate=LocalDate.parse(checkout);
+            int travellersNumber=Integer.parseInt(travellers);
+
+            hotelDTO.setCheckin(checkinDate);
+            hotelDTO.setCheckout(checkoutDate);
+            hotelDTO.setTravellers(travellersNumber);
+
+            //response body
             LocationVO locationVO = locationResponse.getBody();
 
             List<EntitiesVO> hotelListEntities = locationVO.getSuggestions()
                     .stream()
                     .map(SuggestionVO::getEntities)
                     .flatMap(Collection::stream)
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toList())
+            ;
 
             //System.out.println("hotelListEntities"+hotelListEntities.get(0).getDestinationId());
 
@@ -111,8 +132,8 @@ public class HotelServiceImplementation implements HotelServices{
                     .stream()
                     .sorted(Comparator.comparing(ResultsVO::getStarRating, Comparator.reverseOrder()))
                     .limit(10)
-                    .collect(Collectors.toList());
-
+                    .collect(Collectors.toList())
+            ;
             searchResults.forEach(e -> System.out.println("Hotel Name : " + e.getName() + " Star Rating : " + e.getStarRating() + " " + e.getAddress()));
 
             //return search results
@@ -125,7 +146,7 @@ public class HotelServiceImplementation implements HotelServices{
     }
 //--------------------------------------View Hotel ------------------------------------------
     @Override
-    public void viewHotel(String id){
+    public HotelDTO viewHotel(String id, String hotelName, String starRating, String address){
         //setting Headers
         HttpHeaders header=new HttpHeaders();
         header.set("Content-Type","application/json");
@@ -133,6 +154,13 @@ public class HotelServiceImplementation implements HotelServices{
         header.set("X-RapidAPI-Key",key);
         header.set("X-RapidAPI-Host",host);
         HttpEntity<String> entity=new HttpEntity<>(header);
+
+        /* convert starRating to integer and adding all to HotelDTO*/
+        double rating=Double.parseDouble(starRating);
+        hotelDTO.setHotelId(id);
+        hotelDTO.setHotelName(hotelName);
+        hotelDTO.setStarRating(rating);
+        hotelDTO.setAddress(address);
 
         //Adding query parameters to properties/get-details
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getDetailsUrl)
@@ -165,6 +193,10 @@ public class HotelServiceImplementation implements HotelServices{
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList())
         ;
+
+        //adding property amenities to HotelDTO
+        hotelDTO.setPropertyAmenities(propertyAmenities);
+
         System.out.println("----------------property amenities---------------");
         propertyAmenities.forEach(System.out::println);
 
@@ -177,6 +209,8 @@ public class HotelServiceImplementation implements HotelServices{
                 .collect(Collectors.toList())
 
         ;
+        //adding room amenities to HotelDTO
+        hotelDTO.setRoomAmenities(roomAmenities);
 
         System.out.println("---------------Room amenities---------------");
         roomAmenities.forEach(System.out::println);
@@ -190,6 +224,8 @@ public class HotelServiceImplementation implements HotelServices{
                 .collect(Collectors.toList())
 
         ;
+        //adding loction section to HotelDTO
+        hotelDTO.setLocationSection(locationSection);
 
         System.out.println("-----------Location Section----------------");
         locationSection.forEach(System.out::println);
@@ -202,7 +238,10 @@ public class HotelServiceImplementation implements HotelServices{
                 .getCurrentPrice()
                 .getPlain()
         );
-        System.out.println("price"+price);
+        //adding price to HotelDTO
+        hotelDTO.setPrice(price);
+
+        return hotelDTO;
     }
 
 //---------------------------booking--------------------------------------------
