@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -43,10 +44,13 @@ public class HotelServiceImplementation implements HotelServices{
 
     private final RestTemplate restTemplate;
 
+    private UserServiceImpl userServiceImpl;
+
     @Autowired
-    public HotelServiceImplementation(RestTemplate restTemplate,HotelDTO hotelDTO){
+    public HotelServiceImplementation(RestTemplate restTemplate,HotelDTO hotelDTO,UserServiceImpl userServiceImpl){
         this.restTemplate=restTemplate;
         this.hotelDTO=hotelDTO;
+        this.userServiceImpl=userServiceImpl;
     }
 
 //----------------------------------Hotel Search----------------------------------------------
@@ -79,10 +83,7 @@ public class HotelServiceImplementation implements HotelServices{
         if (locationResponse.getStatusCode().is2xxSuccessful() &&
                 Integer.parseInt(locationResponse.getBody().getMoresuggestions())!=0) {
 
-          /*
-               Converting checkin and checkout to Date type and travellers to int
-               and adding to HotelDTO class
-           */
+            //Converting checkin and checkout to Date type and travellers to int and adding to HotelDTO class
 
             LocalDate checkinDate=LocalDate.parse(checkin);
             LocalDate checkoutDate=LocalDate.parse(checkout);
@@ -244,8 +245,25 @@ public class HotelServiceImplementation implements HotelServices{
         return hotelDTO;
     }
 
+
 //---------------------------booking--------------------------------------------
 
+    @Override
+    public void hotelBooking() {
+        //get User
+        String user= userServiceImpl.getUser();
+        if(user.equals("anonymousUser")){
+            //to make unique username
+        }
+        Period period=Period.between(hotelDTO.getCheckin(),hotelDTO.getCheckout());
+        int stayDuration= period.getDays();
+        if(stayDuration==0){
+            double roomRent=hotelDTO.getTravellers()* hotelDTO.getPrice();
+        }
+        else{
+            double roomRent= hotelDTO.getTravellers()* hotelDTO.getPrice()*stayDuration;
+        }
+    }
 
 
 }

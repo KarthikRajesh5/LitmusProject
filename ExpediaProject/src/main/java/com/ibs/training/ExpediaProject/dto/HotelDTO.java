@@ -4,10 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class HotelDTO {
-
-    //include in bookingDTO
-    //private String username;
-
+    
     private String location;
 
     private LocalDate checkin;//

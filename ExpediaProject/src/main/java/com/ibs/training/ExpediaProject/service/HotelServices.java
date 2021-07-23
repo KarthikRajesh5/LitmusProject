@@ -11,4 +11,6 @@ public interface HotelServices {
 
     public HotelDTO viewHotel(String id, String hotelName, String starRating, String address);
 
+    public void hotelBooking();
+
 }

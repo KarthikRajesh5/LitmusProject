@@ -4,6 +4,7 @@ import com.ibs.training.ExpediaProject.VO.ResultsVO;
 import com.ibs.training.ExpediaProject.dto.HotelBookingDTO;
 import com.ibs.training.ExpediaProject.dto.HotelDTO;
 import com.ibs.training.ExpediaProject.service.HotelServiceImplementation;
+import com.ibs.training.ExpediaProject.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -20,15 +22,10 @@ public class HotelController {
 
     private HotelServiceImplementation hotelServiceImplementation;
 
-
     @Autowired
     public HotelController(HotelServiceImplementation hotelSearchService){
         this.hotelServiceImplementation =hotelSearchService;
-
     }
-
-
-
 
     //Hotel Search
     @RequestMapping("/search")
@@ -40,6 +37,9 @@ public class HotelController {
 
         System.out.println(location+" "+checkin+" "+checkout+" "+travellers);
 
+        LocalDate currentDate=LocalDate.now();
+        model.addAttribute("currentDate",currentDate);
+        System.out.println(currentDate);
         List<ResultsVO> searchResult = null;
         if(!location.equals("default")) {
             searchResult = hotelServiceImplementation.HotelSearch(location,checkin,checkout,travellers);
@@ -74,13 +74,19 @@ public class HotelController {
 
     //Booking
     @PostMapping("/booking")
-    public void hotelBooking(HotelBookingDTO hotelBookingDTO,Model model){
-        /* ->incoming details stored to HotelBookingDTO
+    public void hotelBooking(Model model){
+        /*
         *  ->find the logged in username
         *  and set it to the HotelBooking DTO(using Spring Security)
         *  ->save it to database
         *  ->add  "booking successfully" as message in model
         * ->redirect to ViewHotels page and display the message  */
+
+
+
+
+
+
     }
 
 }

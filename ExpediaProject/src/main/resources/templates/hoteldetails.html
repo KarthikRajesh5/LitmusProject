@@ -10,6 +10,9 @@
     <div th:each="details:${hotelDetails.getPropertyAmenities()}">
         <p th:text="${details}"></p>
     </div>
+    <form th:action="@{/hotels/booking}">
+        <button type="submit" >Booking</button>
+    </form>
 </body>
 </html>
 

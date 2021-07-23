@@ -64,8 +64,10 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter
                 .and()
                 .formLogin()
                 .usernameParameter("email")
-                .loginPage("/login").permitAll();
+                .loginPage("/login").permitAll()
+                .successForwardUrl("/")
         ;
+
     }
 
 
