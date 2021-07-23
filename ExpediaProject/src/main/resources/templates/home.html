@@ -2,15 +2,29 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="ISO-8859-1">
-  <title>Registration</title>
+  <title>Homepage</title>
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
 
   <style>
+    .column {
+      float: left;
+      display:inline-block;
+      padding: 15px;
+
+    }
+
+
+    body {
+      border-left: 270px solid white;
+    }
     h3{
       text-align: center;
+    }
+    a{
+      color: black;
     }
   </style>
 <body>
@@ -36,11 +50,31 @@
 <h3>
   <br>
   <br>
-  <a href="/login">Existing User</a></br><br>
-  <a href="/registration">New User?</a></br><br>
-  <a href="/hotels/search">Want to search hotels<sub> click here</sub></a></br><br>
-
-
+  <div class ="row">
+    <p><a href="/login">
+    <div class="column">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-PoKPXu7KaZOsnUYxPBg2uNqMBjGwjRZQtg&usqp=CAU"
+           height="142" width="142" alt="login"><h4>login</h4>
+    </div></a></p>
+    <p><a href="/registration">
+    <div class="column">
+      <img src ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToAI1ui1wCDsbvV0esbEG5fXF4ZuKnj_Jkxg&usqp=CAU"
+           height="142" width="142" alt="registration"><h4>register</h4>
+    </div></a>
+    </p>
+    <p><a href="/hotels/search">
+    <div class="column">
+      <img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBW-pdYN5DH6jDhkptBfGomFe08U-GUoAAbA&usqp=CAU"
+            height="142" width="142" alt="hotels"><h4>hotels</h4>
+    </div>
+    </a></p>
+    <p><a href="/hotels/search">
+    <div class="column">
+      <img  src="data:image/png;base64,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"
+            height="142" width="142" alt="flights"><h4>flights</h4>
+    </div>
+    </a></p>
+  </div>
 </h3>
 </body>
 </html>
