@@ -39,6 +39,7 @@
                 <div class="row">
                     <div class="form-group">
                         <label for="departure" class="control-label">From</label>
+                        <!--<span class="form-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>-->
                         <input type="text" class="form-control" id="departure" placeholder="Leaving From"
                                name="departure" required>
                     </div>
@@ -74,7 +75,7 @@
                 </th:block>
                 <th:block th:if="${searchFlightResults !=null}">
                     <div class="row" style="margin-bottom: 10px">
-                        <div class="col-md-6">
+                        <div class="center-block">
                             <h3 style="text-align: center">Available Flights</h3>
                         </div>
                     </div>
