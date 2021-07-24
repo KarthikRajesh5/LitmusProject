@@ -11,6 +11,9 @@ import java.time.LocalDate;
 public class HotelBookingEntity {
 
     @Id
+    @Column(name="bookingId")
+    private String bookingId;
+
     @Column(name="username")
     private String username;
 
@@ -31,6 +34,15 @@ public class HotelBookingEntity {
 
     @Column(name="duration")
     private int duration;
+
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
+    }
 
     public String getUsername() {
         return username;
@@ -87,4 +99,6 @@ public class HotelBookingEntity {
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
+
 }

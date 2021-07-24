@@ -52,5 +52,10 @@ public class UserServiceImpl implements UserService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth.getName();
     }
+
+    @Override
+    public String generateGuestUser(String user) {
+        return " ";
+    }
 }
 

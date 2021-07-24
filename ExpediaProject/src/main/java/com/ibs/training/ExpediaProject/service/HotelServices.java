@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface HotelServices {
 
-    public List<ResultsVO> HotelSearch(String searchLocation,String checkin,String checkout,String travellers);
+    public List<ResultsVO> HotelSearch(String searchLocation,String checkin,String checkout,String travellers,String rooms);
 
     public HotelDTO viewHotel(String id, String hotelName, String starRating, String address);
 
-    public void hotelBooking();
+    public HotelDTO hotelBooking();
 
 }

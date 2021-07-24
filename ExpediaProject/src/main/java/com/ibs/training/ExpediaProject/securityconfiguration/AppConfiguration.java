@@ -1,6 +1,5 @@
 package com.ibs.training.ExpediaProject.securityconfiguration;
 
-import com.ibs.training.ExpediaProject.dto.HotelBookingDTO;
 import com.ibs.training.ExpediaProject.dto.HotelDTO;
 import com.ibs.training.ExpediaProject.entity.HotelBookingEntity;
 import com.ibs.training.ExpediaProject.service.UserService;

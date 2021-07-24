@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Random;
 
 @Service
 public class HotelServiceImplementation implements HotelServices{
@@ -67,7 +68,8 @@ public class HotelServiceImplementation implements HotelServices{
     public List<ResultsVO> HotelSearch(String searchLocation,
                                        String checkin,
                                        String checkout,
-                                       String travellers) {
+                                       String travellers,
+                                       String rooms) {
 
         //setting Headers
         HttpHeaders header = new HttpHeaders();
@@ -101,6 +103,7 @@ public class HotelServiceImplementation implements HotelServices{
             hotelDTO.setCheckin(checkinDate);
             hotelDTO.setCheckout(checkoutDate);
             hotelDTO.setTravellers(travellersNumber);
+            hotelDTO.setRooms(Integer.parseInt(rooms));
 
             //response body
             LocationVO locationVO = locationResponse.getBody();
@@ -258,7 +261,7 @@ public class HotelServiceImplementation implements HotelServices{
 //---------------------------booking--------------------------------------------
 
     @Override
-    public void hotelBooking() {
+    public HotelDTO hotelBooking() {
         //get User
         String user= userServiceImpl.getUser();
         if(user.equals("anonymousUser")){
@@ -269,11 +272,16 @@ public class HotelServiceImplementation implements HotelServices{
         int stayDuration= period.getDays();
         double roomRent;
         if(stayDuration==0){
-            roomRent=hotelDTO.getTravellers()* hotelDTO.getPrice();
+            roomRent=hotelDTO.getRooms()* hotelDTO.getPrice();
         }
         else{
-            roomRent= hotelDTO.getTravellers()* hotelDTO.getPrice()*stayDuration;
+            roomRent= hotelDTO.getRooms()* hotelDTO.getPrice()*stayDuration;
         }
+
+        //generate booking id
+        int random=new Random(1000).nextInt();
+        //int hashcode=hotelDTO.hashCode();
+        String bookingId="bookingId".concat(String.valueOf(random)).concat(hotelDTO.getHotelId());
 
         //Adding booking details to HotelBookingEntity
         hotelBookingEntity.setUsername(user);
@@ -283,11 +291,12 @@ public class HotelServiceImplementation implements HotelServices{
         hotelBookingEntity.setTravellers(hotelDTO.getTravellers());
         hotelBookingEntity.setRoomrent(roomRent);
         hotelBookingEntity.setDuration(stayDuration);
+        hotelBookingEntity.setBookingId(bookingId);
 
         //saving to repository
         hotelBookingRepository.save(hotelBookingEntity);
 
-
+        return hotelDTO;
     }
 
 

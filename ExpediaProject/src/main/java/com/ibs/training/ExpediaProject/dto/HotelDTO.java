@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class HotelDTO {
-    
-    private String location;
 
     private LocalDate checkin;//
 
@@ -21,6 +19,8 @@ public class HotelDTO {
 
     private String address;
 
+    private int rooms;
+
     private List<String> propertyAmenities;
 
     private List<String> roomAmenities;
@@ -28,15 +28,6 @@ public class HotelDTO {
     private List<String> locationSection;
 
     private double price;
-
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
     public LocalDate getCheckin() {
         return checkin;
@@ -90,6 +81,14 @@ public class HotelDTO {
         return address;
     }
 
+    public int getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(int rooms) {
+        this.rooms = rooms;
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }
@@ -129,7 +128,6 @@ public class HotelDTO {
     @Override
     public String toString() {
         return "HotelDTO{" +
-                ", location='" + location + '\'' +
                 ", checkin=" + checkin +
                 ", checkout=" + checkout +
                 ", travellers=" + travellers +
