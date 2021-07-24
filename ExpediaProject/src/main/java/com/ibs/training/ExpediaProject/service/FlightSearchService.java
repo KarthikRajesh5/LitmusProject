@@ -2,6 +2,7 @@ package com.ibs.training.ExpediaProject.service;
 
 import com.ibs.training.ExpediaProject.VO.FlightResponseVO;
 import com.ibs.training.ExpediaProject.VO.FlightsVO;
+import com.ibs.training.ExpediaProject.dto.FlightDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -17,28 +18,38 @@ import java.util.List;
 @Service
 public class FlightSearchService {
 
+    /* Rapid API Key */
     @Value("${RapidAPI.Key}")
     private String key;
 
+    /* Rapid API Host */
     @Value("${RapidAPI.host}")
     private String host;
 
     private final RestTemplate restTemplate;
 
+    private FlightDTO flightDTO;
+
     @Autowired
-    public FlightSearchService(RestTemplate restTemplate) {
+    public FlightSearchService(RestTemplate restTemplate, FlightDTO flightDTO) {
         this.restTemplate = restTemplate;
+        this.flightDTO = flightDTO;
     }
+
+    /*------------------------------------Flight Search--------------------------------------*/
 
     public List<FlightsVO> flightSearch(String departureAirport, String arrivalAirport, String departureDate) {
 
-        //setting Headers
+        /*Setting Headers*/
         org.springframework.http.HttpHeaders header = new HttpHeaders();
         header.set("Content-Type", "application/json");
         header.set("Accept", "application/json");
         header.set("X-RapidAPI-Key", key);
         header.set("X-RapidAPI-Host", host);
         HttpEntity<String> entity = new HttpEntity<>(header);
+
+        /*API : Google Flights API*/
+        /*Passing the API URL and setting the querries*/
 
         final String url = "https://google-flights-search.p.rapidapi.com/search";
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
@@ -53,6 +64,7 @@ public class FlightSearchService {
                 FlightResponseVO.class
         );
 
+        /*Showcasing the Flight Results from the API*/
         List<FlightsVO> flightSearchResults;
         try {
             flightSearchResults = flightResponse.getBody().getFlights();
@@ -73,4 +85,8 @@ public class FlightSearchService {
 
         return flightSearchResults;
     }
+
+    /*---------------------------Flight Details----------------------------------*/
+
+
 }
