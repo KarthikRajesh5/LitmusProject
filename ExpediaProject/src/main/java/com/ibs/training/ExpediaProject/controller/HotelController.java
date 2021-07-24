@@ -1,10 +1,8 @@
 package com.ibs.training.ExpediaProject.controller;
 
 import com.ibs.training.ExpediaProject.VO.ResultsVO;
-import com.ibs.training.ExpediaProject.dto.HotelBookingDTO;
 import com.ibs.training.ExpediaProject.dto.HotelDTO;
 import com.ibs.training.ExpediaProject.service.HotelServiceImplementation;
-import com.ibs.training.ExpediaProject.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,10 +56,10 @@ public class HotelController {
 
     //View Hotel Details
     @RequestMapping("/details")
-    public String viewHotel(@RequestParam String id,
-                            @RequestParam String hotelName,
-                            @RequestParam String starRating,
-                            @RequestParam String address,
+    public String viewHotel(@RequestParam(required = false) String id,
+                            @RequestParam(required = false)  String hotelName,
+                            @RequestParam(required = false)  String starRating,
+                            @RequestParam(required = false)  String address,
                             Model model) {
         //get address , hotel name , StarRating, image url as request parameter
         System.out.println(id +" "+hotelName+" "+starRating+" "+address);
@@ -74,7 +72,7 @@ public class HotelController {
 
     //Booking
     @PostMapping("/booking")
-    public void hotelBooking(Model model){
+    public String hotelBooking(Model model){
         /*
         *  ->find the logged in username
         *  and set it to the HotelBooking DTO(using Spring Security)
@@ -82,11 +80,11 @@ public class HotelController {
         *  ->add  "booking successfully" as message in model
         * ->redirect to ViewHotels page and display the message  */
 
+        hotelServiceImplementation.hotelBooking();
 
+        model.addAttribute("booking",true);
 
-
-
-
+        return "redirect:/hotels/details";
     }
 
 }

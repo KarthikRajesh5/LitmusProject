@@ -2,6 +2,7 @@ package com.ibs.training.ExpediaProject.securityconfiguration;
 
 import com.ibs.training.ExpediaProject.dto.HotelBookingDTO;
 import com.ibs.training.ExpediaProject.dto.HotelDTO;
+import com.ibs.training.ExpediaProject.entity.HotelBookingEntity;
 import com.ibs.training.ExpediaProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +34,10 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter
         return new HotelDTO();
     }
 
+    @Bean
+    public HotelBookingEntity hotelBookingEntity(){
+        return new HotelBookingEntity();
+    }
 
     @Autowired
     private UserService userService;

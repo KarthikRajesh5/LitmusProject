@@ -2,6 +2,8 @@ package com.ibs.training.ExpediaProject.service;
 
 import com.ibs.training.ExpediaProject.VO.*;
 import com.ibs.training.ExpediaProject.dto.HotelDTO;
+import com.ibs.training.ExpediaProject.entity.HotelBookingEntity;
+import com.ibs.training.ExpediaProject.repository.HotelBookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -42,15 +44,22 @@ public class HotelServiceImplementation implements HotelServices{
 
     private HotelDTO hotelDTO;
 
+    private HotelBookingEntity hotelBookingEntity;
+
     private final RestTemplate restTemplate;
 
     private UserServiceImpl userServiceImpl;
 
+    private HotelBookingRepository hotelBookingRepository;
+
     @Autowired
-    public HotelServiceImplementation(RestTemplate restTemplate,HotelDTO hotelDTO,UserServiceImpl userServiceImpl){
+    public HotelServiceImplementation(RestTemplate restTemplate,HotelDTO hotelDTO,UserServiceImpl userServiceImpl,
+                                      HotelBookingEntity hotelBookingEntity,HotelBookingRepository hotelBookingRepository){
         this.restTemplate=restTemplate;
         this.hotelDTO=hotelDTO;
         this.userServiceImpl=userServiceImpl;
+        this.hotelBookingEntity=hotelBookingEntity;
+        this.hotelBookingRepository=hotelBookingRepository;
     }
 
 //----------------------------------Hotel Search----------------------------------------------
@@ -254,15 +263,31 @@ public class HotelServiceImplementation implements HotelServices{
         String user= userServiceImpl.getUser();
         if(user.equals("anonymousUser")){
             //to make unique username
+            user="guest";
         }
         Period period=Period.between(hotelDTO.getCheckin(),hotelDTO.getCheckout());
         int stayDuration= period.getDays();
+        double roomRent;
         if(stayDuration==0){
-            double roomRent=hotelDTO.getTravellers()* hotelDTO.getPrice();
+            roomRent=hotelDTO.getTravellers()* hotelDTO.getPrice();
         }
         else{
-            double roomRent= hotelDTO.getTravellers()* hotelDTO.getPrice()*stayDuration;
+            roomRent= hotelDTO.getTravellers()* hotelDTO.getPrice()*stayDuration;
         }
+
+        //Adding booking details to HotelBookingEntity
+        hotelBookingEntity.setUsername(user);
+        hotelBookingEntity.setCheckin(hotelDTO.getCheckin());
+        hotelBookingEntity.setCheckout(hotelDTO.getCheckout());
+        hotelBookingEntity.setHotelId(hotelDTO.getHotelId());
+        hotelBookingEntity.setTravellers(hotelDTO.getTravellers());
+        hotelBookingEntity.setRoomrent(roomRent);
+        hotelBookingEntity.setDuration(stayDuration);
+
+        //saving to repository
+        hotelBookingRepository.save(hotelBookingEntity);
+
+
     }
 
 

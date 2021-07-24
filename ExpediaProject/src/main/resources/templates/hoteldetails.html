@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Search page</title>
+    <title>Details Page</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -38,23 +38,24 @@
 <br/>
 <br/>
 <br/>
-
+    <h2 style="color:green" th:if="${booking}">Booking Successfull.!</h2>
     <h2 th:text="'Hotel Name : '+${hotelDetails.getHotelName()}"></h2>
     <h4 th:text="'Star Rating : '+${hotelDetails.getStarRating()}"></h4>
 <h3> Popular Amenities</h3>
     <div th:each="details:${hotelDetails.getPropertyAmenities()}">
-
         <p th:text="${details}"></p>
-
     </div>
-<h3> Explore the area</h3>
-<div th:each="details:${hotelDetails.getRoomAmenities()}">
-    <p th:text="${details}"></p>
-
+<div>
+    <h3> Room Ameneties</h3>
+    <div th:each="details:${hotelDetails.getRoomAmenities()}">
+        <p th:text="${details}"></p>
+    </div>
 </div>
+<form th:action="@{/hotels/booking}" method="post">
 <div class="form-group" style="text-align: center">
     <button  type="submit" class="btn btn-primary">Book</button>
 </div>
+</form>
 </body>
 </html>
 
