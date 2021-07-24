@@ -3,6 +3,8 @@ package com.ibs.training.ExpediaProject.service;
 import com.ibs.training.ExpediaProject.VO.FlightResponseVO;
 import com.ibs.training.ExpediaProject.VO.FlightsVO;
 import com.ibs.training.ExpediaProject.dto.FlightDTO;
+import com.ibs.training.ExpediaProject.entity.FlightEntity;
+import com.ibs.training.ExpediaProject.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -26,12 +28,15 @@ public class FlightSearchService {
     @Value("${RapidAPI.host}")
     private String host;
 
+    private FlightRepository flightRepository;
+
     private final RestTemplate restTemplate;
 
     private FlightDTO flightDTO;
 
     @Autowired
-    public FlightSearchService(RestTemplate restTemplate, FlightDTO flightDTO) {
+    public FlightSearchService(FlightRepository flightRepository, RestTemplate restTemplate, FlightDTO flightDTO) {
+        this.flightRepository = flightRepository;
         this.restTemplate = restTemplate;
         this.flightDTO = flightDTO;
     }
@@ -88,6 +93,8 @@ public class FlightSearchService {
 
     /*---------------------------Flight Details----------------------------------*/
 
+    /*setting the data in flightDTO*/
+
     public FlightDTO viewFlight(String airlines, String departure, String arrival, String departureDate, String departureTime,
                                 String arrivalDate, String arrivalTime, String tripDuration, String cabinClass, Double price) {
 
@@ -102,6 +109,27 @@ public class FlightSearchService {
         flightDTO.setCabinClass(cabinClass);
         flightDTO.setPrice(price);
         return flightDTO;
+    }
+
+    /*----------------------------Flight Booking-------------------------------*/
+
+    /*Saving the Flight Details to DB*/
+    /*DTO data passed to FlightEntity*/
+
+    public FlightEntity save(FlightDTO flightDTO) {
+
+        FlightEntity flightEntity = new FlightEntity(flightDTO.getDepartureAirportCode(),
+                flightDTO.getArrivalAirportCode(),
+                flightDTO.getPrice(),
+                flightDTO.getTripDuration(),
+                flightDTO.getDepartureDate(),
+                flightDTO.getDepartureTime(),
+                flightDTO.getArrivalTime(),
+                flightDTO.getCabinClass(),
+                flightDTO.getAirlines(),
+                flightDTO.getArrivalDate());
+
+        return flightRepository.save(flightEntity);
     }
 
 }

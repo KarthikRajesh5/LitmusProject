@@ -29,6 +29,7 @@
               class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#" th:href="@{/}">Expedia Flight Search</a>
+
     </div>
   </div>
 </nav>
@@ -36,6 +37,7 @@
 <br/>
 <br/>
 <br/>
+
 <h2 th:text="'Airlines Name : '+${flightDetails.getAirlines()}"></h2>
 <h4 th:text="'Origin : '+${flightDetails.getDepartureAirportCode()}"></h4>
 <h4 th:text="'Destination : '+${flightDetails.getArrivalAirportCode()}"></h4>
@@ -48,8 +50,20 @@
 <h4 th:text="'Price : '+${flightDetails.getPrice()}"></h4>
 
 
-<div class="form-group" style="text-align: center">
-  <button  type="submit" class="btn btn-primary">Book</button>
+<div class="form-group center-block">
+  <a th:href="@{/flights/bookFlights(airline=${flightDetails.getAirlines()},
+                                           origin=${flightDetails.getDepartureAirportCode()},
+                                           destination=${flightDetails.getArrivalAirportCode()},
+                                           departDate=${flightDetails.getDepartureDate()},
+                                           departTime=${flightDetails.getDepartureTime()},
+                                           arrDate=${flightDetails.getArrivalDate()},
+                                           arrTime=${flightDetails.getArrivalTime()},
+                                           tripLength=${flightDetails.getTripDuration()},
+                                           type=${flightDetails.getCabinClass()},
+                                           amount=${flightDetails.getPrice()})}">
+    <button type="submit" class="btn btn-success">BOOK</button>
+  </a>
+</div>
 </div>
 </body>
 </html>

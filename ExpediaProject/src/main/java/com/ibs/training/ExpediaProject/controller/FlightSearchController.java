@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.List;
 
 @Controller
@@ -78,5 +77,33 @@ public class FlightSearchController {
         LOGGER.info("Flights available are"+flightDetails.toString());
         return "viewPage";
     }
+
+    /*----------Flight Booking-----------*/
+
+    @RequestMapping("/bookFlights")
+    public String bookFlight(@RequestParam String airline,
+                             @RequestParam String origin,
+                             @RequestParam String destination,
+                             @RequestParam String departDate,
+                             @RequestParam String departTime,
+                             @RequestParam String arrDate,
+                             @RequestParam String arrTime,
+                             @RequestParam String tripLength,
+                             @RequestParam String type,
+                             @RequestParam Double amount,
+                             Model model) {
+
+        LOGGER.info("From:" + origin +" TO:" + destination + "Departure Date: " + departDate);
+        FlightDTO flightBook = flightSearchService.viewFlight(airline,origin,
+                destination,departDate,
+                departTime,arrDate,
+                arrTime,tripLength,
+                type,amount);
+        model.addAttribute("flightBook",flightBook);
+        LOGGER.info("Flights found are"+flightBook.toString());
+        flightSearchService.save(flightBook);
+        return "bookFlights";
+    }
+
 }
 
