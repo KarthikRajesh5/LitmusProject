@@ -88,5 +88,20 @@ public class FlightSearchService {
 
     /*---------------------------Flight Details----------------------------------*/
 
+    public FlightDTO viewFlight(String airlines, String departure, String arrival, String departureDate, String departureTime,
+                                String arrivalDate, String arrivalTime, String tripDuration, String cabinClass, Double price) {
+
+        flightDTO.setAirlines(airlines);
+        flightDTO.setDepartureAirportCode(departure);
+        flightDTO.setArrivalAirportCode(arrival);
+        flightDTO.setDepartureDate(departureDate);
+        flightDTO.setDepartureTime(departureTime);
+        flightDTO.setArrivalDate(arrivalDate);
+        flightDTO.setArrivalTime(arrivalTime);
+        flightDTO.setTripDuration(tripDuration);
+        flightDTO.setCabinClass(cabinClass);
+        flightDTO.setPrice(price);
+        return flightDTO;
+    }
 
 }

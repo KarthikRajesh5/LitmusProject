@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Search page</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+  <style>
+    .table{
+      border-collapse: collapse;
+    }
+    body {
+      border-left: 20px solid white;
+    }
+  </style>
+</head>
+<body>
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed"
+              data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+              aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span> <span
+              class="icon-bar"></span> <span class="icon-bar"></span> <span
+              class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#" th:href="@{/}">Expedia Flight Search</a>
+    </div>
+  </div>
+</nav>
+<br/>
+<br/>
+<br/>
+<br/>
+<h2 th:text="'Airlines Name : '+${flightDetails.getAirlines()}"></h2>
+<h4 th:text="'Origin : '+${flightDetails.getDepartureAirportCode()}"></h4>
+<h4 th:text="'Destination : '+${flightDetails.getArrivalAirportCode()}"></h4>
+<h4 th:text="'Departure Date : '+${flightDetails.getDepartureDate()}"></h4>
+<h4 th:text="'Departure Time : '+${flightDetails.getDepartureTime()}"></h4>
+<h4 th:text="'Arrival Date : '+${flightDetails.getArrivalDate()}"></h4>
+<h4 th:text="'Arrival Time : '+${flightDetails.getArrivalTime()}"></h4>
+<h4 th:text="'Trip Duration : '+${flightDetails.getTripDuration()}"></h4>
+<h4 th:text="'Cabin Class : '+${flightDetails.getCabinClass()}"></h4>
+<h4 th:text="'Price : '+${flightDetails.getPrice()}"></h4>
+
+
+<div class="form-group" style="text-align: center">
+  <button  type="submit" class="btn btn-primary">Book</button>
+</div>
+</body>
+</html>
