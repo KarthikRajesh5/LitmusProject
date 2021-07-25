@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Search page</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <style>
+        .table{
+            border-collapse: collapse;
+        }
+        body {
+            border-left: 20px solid white;
+        }
+    </style>
+</head>
+<body>
+<h1>--------BOOKING SUCCESSFULL--------</h1>
+
+<h2>Airline Info</h2>
+
+<h2 th:text="'Airlines Name : '+${flightBook.getAirlines()}"></h2>
+<h4 th:text="'Origin : '+${flightBook.getDepartureAirportCode()}"></h4>
+<h4 th:text="'Destination : '+${flightBook.getArrivalAirportCode()}"></h4>
+<h4 th:text="'Departure Date : '+${flightBook.getDepartureDate()}"></h4>
+<h4 th:text="'Departure Time : '+${flightBook.getDepartureTime()}"></h4>
+<h4 th:text="'Arrival Date : '+${flightBook.getArrivalDate()}"></h4>
+<h4 th:text="'Arrival Time : '+${flightBook.getArrivalTime()}"></h4>
+<h4 th:text="'Trip Duration : '+${flightBook.getTripDuration()}"></h4>
+<h4 th:text="'Cabin Class : '+${flightBook.getCabinClass()}"></h4>
+<h4 th:text="'Price : '+${flightBook.getPrice()}"></h4>
+
+
+<h2>Passenger Info</h2>
+
+<h4 th:text="'Airlines Name : '+${passenger.getFirstName()}"></h4>
+<h4 th:text="'Origin : '+${passenger.getLastName()}"></h4>
+<h4 th:text="'Destination : '+${passenger.getPassportNumber()}"></h4>
+<h4 th:text="'Departure Date : '+${passenger.getEmail()}"></h4>
+<h4 th:text="'Departure Time : '+${passenger.getAddress()}"></h4>
+<h4 th:text="'Arrival Date : '+${passenger.getNoOfTravellers()}"></h4>
+<h4 th:text="'Arrival Time : '+${passenger.getNoOfAdults()}"></h4>
+<h4 th:text="'Trip Duration : '+${passenger.getNoOfInfants()}"></h4>
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 package com.ibs.training.ExpediaProject.securityconfiguration;
 
 import com.ibs.training.ExpediaProject.dto.FlightDTO;
+import com.ibs.training.ExpediaProject.dto.PassengerDTO;
 import com.ibs.training.ExpediaProject.service.UserService;
 import org.hibernate.bytecode.enhance.internal.tracker.NoopCollectionTracker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter
     @Bean
     public FlightDTO flightDTO(){
         return new FlightDTO();
+    }
+
+    @Bean
+    public PassengerDTO passengerDTO(){
+        return new PassengerDTO();
     }
 
     @Bean

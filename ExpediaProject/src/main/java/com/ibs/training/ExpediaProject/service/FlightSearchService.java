@@ -3,8 +3,10 @@ package com.ibs.training.ExpediaProject.service;
 import com.ibs.training.ExpediaProject.VO.FlightResponseVO;
 import com.ibs.training.ExpediaProject.VO.FlightsVO;
 import com.ibs.training.ExpediaProject.dto.FlightDTO;
+import com.ibs.training.ExpediaProject.dto.PassengerDTO;
 import com.ibs.training.ExpediaProject.entity.FlightEntity;
 import com.ibs.training.ExpediaProject.repository.FlightRepository;
+import com.ibs.training.ExpediaProject.repository.PassengerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -30,15 +32,21 @@ public class FlightSearchService {
 
     private FlightRepository flightRepository;
 
+    private PassengerRepository passengerRepository;
+
     private final RestTemplate restTemplate;
 
     private FlightDTO flightDTO;
 
+    private PassengerDTO passengerDTO;
+
     @Autowired
-    public FlightSearchService(FlightRepository flightRepository, RestTemplate restTemplate, FlightDTO flightDTO) {
+    public FlightSearchService(FlightRepository flightRepository, PassengerRepository passengerRepository, RestTemplate restTemplate, FlightDTO flightDTO, PassengerDTO passengerDTO) {
         this.flightRepository = flightRepository;
+        this.passengerRepository = passengerRepository;
         this.restTemplate = restTemplate;
         this.flightDTO = flightDTO;
+        this.passengerDTO = passengerDTO;
     }
 
     /*------------------------------------Flight Search--------------------------------------*/
@@ -131,5 +139,9 @@ public class FlightSearchService {
 
         return flightRepository.save(flightEntity);
     }
+
+    /*-------------------------Passenger Details------------------------------------*/
+
+    /*Saving Passenger Details to DB via Passenger Entity class*/
 
 }

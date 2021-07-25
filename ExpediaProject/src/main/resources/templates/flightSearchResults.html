@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -59,7 +59,6 @@
                     <div>
                         <div class="form-group col-12">
                             <button type="submit" class="btn btn-success" style="float: right">Search</button>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -102,12 +101,7 @@
             </thead>-->
 
             <tr th:each="flights:${searchFlightResults}">
-                <!-- <td>
-                     <a th:href="@{/flights/view(flightName=${flights.getAirlines()})}">
-                         <img src="https://limusflightimagesbucket.s3.us-east-2.amazonaws.com/Airline.jpg"
-                              alt="flight-image" style="border-radius:10%" width="180px" height="180px">
-                     </a>
-                 </td>-->
+
                 <td>
                     <a th:href="@{/flights/view(airlines=${flights.getAirlines()},
                                            departure1=${flights.getDeparture_airport_code()},
@@ -125,9 +119,10 @@
 
                 </td>
                 <td>
-                    <h4 th:text="${flights.getAirlines()}" ></h4>
-                    <h5 th:text="${flights.getDeparture_airport_code()}"></h5>
-                    <h5 th:text="${flights.getArrival_airport_code()}"></h5>
+                    <h4 style="display:inline" th:text="${flights.getDeparture_time()}"></h4>-<h4 style="display:inline" th:text="${flights.getArrival_time()}"></h4><br><br>
+                    <h5 style="display:inline" th:text="${flights.getDeparture_airport_code()}"></h5>-<h5 style="display:inline" th:text="${flights.getArrival_airport_code()}"></h5><br>
+                    <h5 th:text="${flights.getAirlines()}" ></h5>
+                    <h4 style="text-align:right" th:text="${flights.getPrice()}"></h4>
                 </td>
                 <!-- <td th:text="${flights.getAirlines()}"/>
                  <td th:text="${flights.getDeparture_airport_code()}"/>
@@ -146,3 +141,4 @@
 </div>
 </body>
 </html>
+

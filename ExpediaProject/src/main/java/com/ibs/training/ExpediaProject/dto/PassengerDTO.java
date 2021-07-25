@@ -1,54 +1,15 @@
-package com.ibs.training.ExpediaProject.entity;
+package com.ibs.training.ExpediaProject.dto;
 
-import javax.persistence.*;
+public class PassengerDTO {
 
-@Entity
-@Table
-public class Passenger {
-
-    @Id
-    @Column(name = "PASSENGERID")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long passengerId;
-
-    @Column(name = "FIRSTNAME")
     private String firstName;
-    @Column(name = "LASTNAME")
     private String lastName;
-    @Column(name = "PASSPORTNUMBER")
     private String passportNumber;
-    @Column(name = "EMAIL")
     private String email;
-    @Column(name = "ADDRESS")
     private String address;
-    @Column(name = "TRAVELLERS")
     private int noOfTravellers;
-    @Column(name = "ADULTS")
     private int noOfAdults;
-    @Column(name = "INFANTS")
     private int noOfInfants;
-
-    public Passenger() {
-    }
-
-    public Passenger(String firstName, String lastName, String passportNumber, String email, String address, int noOfTravellers, int noOfAdults, int noOfInfants) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.passportNumber = passportNumber;
-        this.email = email;
-        this.address = address;
-        this.noOfTravellers = noOfTravellers;
-        this.noOfAdults = noOfAdults;
-        this.noOfInfants = noOfInfants;
-    }
-
-    public Long getPassengerId() {
-        return passengerId;
-    }
-
-    public void setPassengerId(Long passengerId) {
-        this.passengerId = passengerId;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -116,9 +77,8 @@ public class Passenger {
 
     @Override
     public String toString() {
-        return "Passenger{" +
-                "passengerId=" + passengerId +
-                ", firstName='" + firstName + '\'' +
+        return "PassengerDTO{" +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", passportNumber='" + passportNumber + '\'' +
                 ", email='" + email + '\'' +
