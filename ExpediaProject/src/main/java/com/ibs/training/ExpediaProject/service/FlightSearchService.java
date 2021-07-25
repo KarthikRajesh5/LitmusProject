@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -81,7 +82,7 @@ public class FlightSearchService {
         /*Showcasing the Flight Results from the API*/
         List<FlightsVO> flightSearchResults;
         try {
-            flightSearchResults = flightResponse.getBody().getFlights();
+            flightSearchResults = flightResponse.getBody().getFlights().stream().limit(7).collect(Collectors.toList());
             flightSearchResults.forEach(e -> System.out.println("Flight Name : " + e.getAirlines()
                     + " Departure Airport : " + e.getDeparture_airport_code()
                     + " Arrival Airport " + e.getArrival_airport_code()

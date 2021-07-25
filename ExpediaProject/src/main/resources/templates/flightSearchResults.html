@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -100,7 +100,7 @@
             </tr>
             </thead>-->
 
-            <tr th:each="flights:${searchFlightResults}">
+            <tr th:each="flights,state:${searchFlightResults}">
 
                 <td>
                     <a th:href="@{/flights/view(airlines=${flights.getAirlines()},
@@ -113,8 +113,10 @@
                                            tripDuration=${flights.getTrip_duration()},
                                            cabinClass=${flights.getCabin_class()},
                                            price=${flights.getPrice()})}">
-                        <img src="https://limusflightimagesbucket.s3.us-east-2.amazonaws.com/Airline.jpg"
-                             alt="flight-image" style="border-radius:10%" width="180px" height="140px">
+                        <!--<img src="https://limusflightimagesbucket.s3.us-east-2.amazonaws.com/Airline.jpg"
+                             alt="flight-image" style="border-radius:10%" width="180px" height="140px">-->
+                        <img th:src="${images.get(state.index)}"
+                             alt="flight-image" style="border-radius:10%" width="180px" height="180px"/>
                     </a>
 
                 </td>

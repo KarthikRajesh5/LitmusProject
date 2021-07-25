@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -44,6 +46,15 @@ public class FlightSearchController {
                 model.addAttribute("notFound", "No Flights Available!");
             } else {
                 model.addAttribute("searchFlightResults", searchFlightResult);
+                List<String> imageList=new ArrayList<>();
+                imageList.add("https://limusflightimagesbucket.s3.us-east-2.amazonaws.com/Airline.jpg");
+                imageList.add("https://limusflightimagesbucket.s3.us-east-2.amazonaws.com/Airline7.jpg");
+                imageList.add("https://limusflightimagesbucket.s3.us-east-2.amazonaws.com/Airline3.jpg");
+                imageList.add("https://limusflightimagesbucket.s3.us-east-2.amazonaws.com/Airline4.jpg");
+                imageList.add("https://limusflightimagesbucket.s3.us-east-2.amazonaws.com/Airline5.jpg");
+                imageList.add("https://limusflightimagesbucket.s3.us-east-2.amazonaws.com/Airline6.jpg");
+                imageList.add("https://limusflightimagesbucket.s3.us-east-2.amazonaws.com/Airlines2.jpg");
+                model.addAttribute("images",imageList);
             }
         } else{
             model.addAttribute("searchFlightResults", null);
