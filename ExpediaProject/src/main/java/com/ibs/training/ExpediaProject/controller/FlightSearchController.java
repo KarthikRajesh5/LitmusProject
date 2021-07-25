@@ -103,6 +103,7 @@ public class FlightSearchController {
                 arrTime,tripLength,
                 type,amount);
         model.addAttribute("flightBook",flightBook);
+        model.addAttribute("passenger", new PassengerDTO());
         LOGGER.info("Flights found are"+flightBook.toString());
         flightSearchService.save(flightBook);
         return "bookFlights";
