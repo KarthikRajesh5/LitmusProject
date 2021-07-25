@@ -1,10 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>BOOKING</title>
+    <meta charset="ISO-8859-1">
+    <title>Passenger Details</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
 </head>
 <body>
 
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Expedia Flight</a>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+<!-- Create HTML registration form -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+
+            <h1>Passenger Details</h1>
+
+            <form th:action="@{/flights/bookFlights}"  method="post" th:object="${passenger}">
+                <div class="form-group">
+                    <label class="control-label" for="firstName"> First Name </label>
+                    <input id="firstName" class="form-control" th:field="*{firstName}"
+                           required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="lastName"> Last Name </label> <input
+                        id="lastName" class="form-control" th:field="*{lastName}"
+                        required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="passportNumber"> Passport Number </label> <input
+                        id="passportNumber" class="form-control" th:field="*{passportNumber}"
+                        required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="email"> Email </label> <input
+                        id="email" class="form-control" th:field="*{email}" required
+                        autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="address"> Address </label> <input
+                        id="address" class="form-control" th:field="*{address}"
+                        required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="travellers"> Travellers </label> <input
+                        id="travellers" class="form-control"
+                        th:field="*{noOfTravellers}" required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="adults"> Adults </label> <input
+                        id="adults" class="form-control"
+                        th:field="*{noOfAdults}" required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="infants"> Infants </label> <input
+                        id="infants" class="form-control"
+                        th:field="*{noOfInfants}" required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <a th:href="@{/flights/results}">
+                        <button type="submit" class="btn btn-success">Check Out</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<h2 th:text="'Airlines Name : '+${flightBook.getAirlines()}"></h2>
+<h4 th:text="'Origin : '+${flightBook.getDepartureAirportCode()}"></h4>
+<h4 th:text="'Destination : '+${flightBook.getArrivalAirportCode()}"></h4>
+<h4 th:text="'Departure Date : '+${flightBook.getDepartureDate()}"></h4>
+<h4 th:text="'Departure Time : '+${flightBook.getDepartureTime()}"></h4>
+<h4 th:text="'Arrival Date : '+${flightBook.getArrivalDate()}"></h4>
+<h4 th:text="'Arrival Time : '+${flightBook.getArrivalTime()}"></h4>
+<h4 th:text="'Trip Duration : '+${flightBook.getTripDuration()}"></h4>
+<h4 th:text="'Cabin Class : '+${flightBook.getCabinClass()}"></h4>
+<h4 th:text="'Price : '+${flightBook.getPrice()}"></h4>
 </body>
 </html>

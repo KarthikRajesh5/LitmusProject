@@ -5,6 +5,7 @@ import com.ibs.training.ExpediaProject.VO.FlightsVO;
 import com.ibs.training.ExpediaProject.dto.FlightDTO;
 import com.ibs.training.ExpediaProject.dto.PassengerDTO;
 import com.ibs.training.ExpediaProject.entity.FlightEntity;
+import com.ibs.training.ExpediaProject.entity.Passenger;
 import com.ibs.training.ExpediaProject.repository.FlightRepository;
 import com.ibs.training.ExpediaProject.repository.PassengerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,5 +144,18 @@ public class FlightSearchService {
     /*-------------------------Passenger Details------------------------------------*/
 
     /*Saving Passenger Details to DB via Passenger Entity class*/
+    /*DTO data passed to PassengerEntity*/
+
+    public Passenger set(PassengerDTO passengerDTO) {
+        Passenger passenger = new Passenger(passengerDTO.getFirstName(),
+                passengerDTO.getLastName(),
+                passengerDTO.getPassportNumber(),
+                passengerDTO.getEmail(),
+                passengerDTO.getAddress(),
+                passengerDTO.getNoOfTravellers(),
+                passengerDTO.getNoOfAdults(),
+                passengerDTO.getNoOfInfants());
+        return passengerRepository.save(passenger);
+    }
 
 }
