@@ -12,7 +12,7 @@ public class LoginController {
 
     @GetMapping("/")
     public String home(){
-        return "hotelresults";
+        return "home";
     }
     @GetMapping("/login")
     public String loginPage() {

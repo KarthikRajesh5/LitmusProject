@@ -80,14 +80,14 @@
     <table class="table table-striped table-hover"
            th:unless="${#lists.isEmpty(searchResults)}" style="margin-top:30px">
 
-        <tr th:each="hotels:${searchResults}">
+        <tr th:each="hotels,state:${searchResults}">
             <td>
                 <a th:href="@{/hotels/details(id=${hotels.getId()},
                                            hotelName=${hotels.getName()},
                                            starRating=${hotels.getStarRating()},
                                            address=${hotels.getAddress()})}">
-                    <img src="https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel1.jpg"
-                    alt="hotel-image" style="border-radius:10%" width="180px" height="180px">
+                    <img th:src="${images.get(state.index)}"
+                    alt="hotel-image" style="border-radius:10%" width="180px" height="180px"/>
                 </a>
 
             </td>

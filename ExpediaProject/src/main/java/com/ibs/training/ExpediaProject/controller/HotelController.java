@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,6 +47,18 @@ public class HotelController {
             searchResult = hotelServiceImplementation.HotelSearch(location,checkin,checkout,travellers,rooms);
             if (searchResult != null) {
                 model.addAttribute("searchResults", searchResult);
+                List<String> imageList=new ArrayList<>();
+                imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel1.jpg");
+                imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel2.jpg");
+                imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel3.jfif");
+                imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel4.webp");
+                imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel5.jpg");
+                imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel6.jpg");
+                imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel7.webp");
+                imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel8.jpg");
+                imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel9.webp");
+                imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel10.jpg");
+                model.addAttribute("images",imageList);
             }
             else {
                 model.addAttribute("error_message",true);

@@ -273,6 +273,7 @@ public class HotelServiceImplementation implements HotelServices{
         double roomRent;
         if(stayDuration==0){
             roomRent=hotelDTO.getRooms()* hotelDTO.getPrice();
+            stayDuration=1;
         }
         else{
             roomRent= hotelDTO.getRooms()* hotelDTO.getPrice()*stayDuration;
