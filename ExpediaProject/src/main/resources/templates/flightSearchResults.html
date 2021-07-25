@@ -124,6 +124,7 @@
                     <h4 style="display:inline" th:text="${flights.getDeparture_time()}"></h4>-<h4 style="display:inline" th:text="${flights.getArrival_time()}"></h4><br><br>
                     <h5 style="display:inline" th:text="${flights.getDeparture_airport_code()}"></h5>-<h5 style="display:inline" th:text="${flights.getArrival_airport_code()}"></h5><br>
                     <h5 th:text="${flights.getAirlines()}" ></h5>
+                    <h5 style="text-align:center" th:text="${flights.getTrip_duration()}"></h5>
                     <h4 style="text-align:right" th:text="${flights.getPrice()}"></h4>
                 </td>
                 <!-- <td th:text="${flights.getAirlines()}"/>
