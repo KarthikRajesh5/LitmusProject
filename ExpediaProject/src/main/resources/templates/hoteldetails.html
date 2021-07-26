@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="ISO-8859-1">
     <title>Details Page</title>
@@ -13,12 +12,29 @@
             border-collapse: collapse;
         }
         body {
-            border-left: 20px solid white;
+            border-left: 210px solid white;
+
+        }
+        th{
+            border-left: 210px solid white;
+
+        }
+
+        .coln {
+            column-count: 2;
+            column-gap:2px;
+        }
+        .form-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            border: 3px solid green;
         }
     </style>
 </head>
 <body>
-<!-- create navigation bar ( header) -->
+<!-- create navigation baar ( header) -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -34,28 +50,40 @@
         </div>
     </div>
 </nav>
-<br/>
-<br/>
-<br/>
-<br/>
-    <h2 style="color:green" th:if="${booking}">Booking Successfull.!</h2>
-    <h2 th:text="'Hotel Name : '+${hotelDetails.getHotelName()}"></h2>
-    <h4 th:text="'Star Rating : '+${hotelDetails.getStarRating()}"></h4>
-<h3> Popular Amenities</h3>
-    <div th:each="details:${hotelDetails.getPropertyAmenities()}">
-        <p th:text="${details}"></p>
-    </div>
-<div>
-    <h3> Room Ameneties</h3>
-    <div th:each="details:${hotelDetails.getRoomAmenities()}">
-        <p th:text="${details}"></p>
-    </div>
+</br>
+</br>
+<h2 style="color:green" th:if="${booking}">Booking Successfull.!</h2>
+<p><a href="/">
+<div class="column">
+    <img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd_e_49E66C7Noa-eabXpW-OZCvTGfSMDhSg&usqp=CAU"
+          height="60" width="60" alt="hotels"  align="right">
+</div></a></div>
+<p><a href="/hotels/search">
+<div class="column">
+    <img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBW-pdYN5DH6jDhkptBfGomFe08U-GUoAAbA&usqp=CAU"
+          height="60" width="60" alt="hotels"  align="right">
 </div>
-<form th:action="@{/hotels/booking}" method="post">
-<div class="form-group" style="text-align: center">
-    <button  type="submit" class="btn btn-primary">Book</button>
+</a></p>
+<h3 th:text="'Hotel Name : '+${hotelDetails.getHotelName()}"></h3>
+<h4 th:text="'Star Rating : '+${hotelDetails.getStarRating()}"></h4>
+<h3> Popular Amenities</h3>
+<div class="row">
+    <div class="coln" >
+        <div th:each="details:${hotelDetails.getPropertyAmenities()}">
+            <p th:text=" '=> '+${details}"></p>
+        </div>
+    </div><h3> Room Ameneties</h3>
+
+    <div class="coln" >
+        <div th:each="details:${hotelDetails.getRoomAmenities()}">
+            <p th:text="'=> '+${details}"></p>
+        </div>
+    </div>
+    <form th:action="@{/hotels/booking}" method="post">
+        <div class="form-group" style="text-align: center">
+            <button  type="submit" class="btn btn-primary">Book</button>
+        </div>
 </div>
 </form>
 </body>
 </html>
-
