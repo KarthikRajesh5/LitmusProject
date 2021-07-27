@@ -43,7 +43,7 @@
             <form th:action="@{/login}"  method="post">
                 <div class="form-group">
                     <label class="control-label" for="email"> Username</label> <input
-                        id="email" class="form-control" th:field="*{email}" required
+                        id="email" class="form-control" name="email" required
                         autofocus="autofocus" />
                 </div>
 
@@ -51,7 +51,7 @@
                 <div class="form-group">
                     <label class="control-label" for="password"> Password </label> <input
                         id="password" class="form-control" type="password"
-                        th:field="*{password}" required autofocus="autofocus" />
+                        name="password" required autofocus="autofocus" />
                 </div>
 
 
