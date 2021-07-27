@@ -11,15 +11,15 @@
         .table{
             border-collapse: collapse;
         }
+
         body {
-            border-left: 210px solid white;
+            border-left: 20px solid white;
 
         }
         th{
-            border-left: 210px solid white;
+            border-left: 20px solid white;
 
         }
-
         .coln {
             column-count: 2;
             column-gap:2px;
@@ -35,31 +35,40 @@
 </head>
 <body>
 <!-- create navigation baar ( header) -->
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                    aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span> <span
-                    class="icon-bar"></span> <span class="icon-bar"></span> <span
-                    class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#" th:href="@{/}">Expedia HotelSearch</a>
-
+            <a class="navbar-brand" href="#">Expedia</a>
         </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><li><a href="/">Home</a></li>
+            <li><a href="/hotels/search">Hotels</a></li>
+
+
+        </ul>
     </div>
 </nav>
 <br/>
 <br/><br/>
 <h2 style="color:green" th:if="${booking}">Booking Successfull.!</h2>
-
-<img th:src="${hotelimage}" height="200" width="200" alt="hotels"  align="center">
-<h3 th:text="'Hotel Name : '+${hotelDetails.getHotelName()}"></h3>
+<table class="table table-striped table-hover" style="margin-top:30px">
+<tr>
+    <td><img th:src="${hotelimage}" height="220" width="220" alt="hotels"  align="center"></td>
+<td><h3 th:text="'Hotel Name : '+${hotelDetails.getHotelName()}"></h3>
 <h4 th:text="'Star Rating : '+${hotelDetails.getStarRating()}"></h4>
 <h4 th:text="'Address : '+${hotelDetails.getAddress()}"></h4>
-<h4 th:text="'Price : '+${hotelDetails.getTotalPrice()}"></h4>
-</div>
+<h4 th:text="'Price : '+${hotelDetails.getTotalPrice()}+'$'"></h4></td>
+    </div></tr>
+    <tr><td>
+    <form th:action="@{/hotels/booking(image=${hotelimage})}" method="post">
+        <div class="abc" style="text-align: left">
+            <button  type="submit" class="btn btn-primary">Book</button>
+        </div>
+        </div>
+    </form>
+</td>
+    </tr>
+</table>
 <h3> Popular Amenities</h3>
 <div class="row">
     <div class="coln" >
@@ -70,7 +79,9 @@
 
     <div class="coln" >
         <div th:each="details:${hotelDetails.getRoomAmenities()}">
-            <p th:text="'=> '+${details}"></p>
+<!--            <i class="fa-li fa fa-spinner fa-spin">-->
+                <p th:text="'=> '+${details}"></p>
+<!--            </i>-->
         </div>
     </div>
     <h3>NearBy places </h3>
@@ -79,11 +90,6 @@
             <p th:text=" '=> '+${details}"></p>
         </div>
 
-        <form th:action="@{/hotels/booking(image=${hotelimage})}" method="post">
-        <div class="abc" style="text-align: left">
-            <button  type="submit" class="btn btn-primary">Book</button>
-        </div>
-</div>
-</form>
+
 </body>
 </html>
