@@ -51,26 +51,15 @@
     </div>
 </nav>
 <br/>
+<br/><br/>
 <h2 style="color:green" th:if="${booking}">Booking Successfull.!</h2>
-<p>
-    <a href="/">
-    <div class="column">
-        <img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd_e_49E66C7Noa-eabXpW-OZCvTGfSMDhSg&usqp=CAU"
-          height="60" width="60" alt="hotels"  align="right"/>
-    </div>
-    </a>
-</p>
 
-<p>
-    <a href="/hotels/search">
-    <div class="column">
-        <img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBW-pdYN5DH6jDhkptBfGomFe08U-GUoAAbA&usqp=CAU"
-          height="60" width="60" alt="hotels"  align="right"/>
-    </div>
-</a></p>
-<img th:src="${hotelimage}">
+<img th:src="${hotelimage}" height="200" width="200" alt="hotels"  align="center">
 <h3 th:text="'Hotel Name : '+${hotelDetails.getHotelName()}"></h3>
 <h4 th:text="'Star Rating : '+${hotelDetails.getStarRating()}"></h4>
+<h4 th:text="'Address : '+${hotelDetails.getAddress()}"></h4>
+<h4 th:text="'Price : '+${hotelDetails.getPrice()}"></h4>
+</div>
 <h3> Popular Amenities</h3>
 <div class="row">
     <div class="coln" >
@@ -84,8 +73,14 @@
             <p th:text="'=> '+${details}"></p>
         </div>
     </div>
-    <form th:action="@{/hotels/booking(image=${hotelimage})}" method="post">
-        <div class="form-group" style="text-align: center">
+    <h3>NearBy places </h3>
+    <div class="coln" >
+        <div th:each="details:${hotelDetails.getLocationSection()}">
+            <p th:text=" '=> '+${details}"></p>
+        </div>
+
+        <form th:action="@{/hotels/booking(image=${hotelimage})}" method="post">
+        <div class="abc" style="text-align: left">
             <button  type="submit" class="btn btn-primary">Book</button>
         </div>
 </div>
