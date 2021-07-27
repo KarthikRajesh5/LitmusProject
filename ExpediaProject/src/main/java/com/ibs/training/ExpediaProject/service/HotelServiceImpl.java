@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class HotelServiceImpl implements HotelService {
 
-    @Value("${RapidAPI.Key}")
+    @Value("${RapidAPI.Hotels.Key}")
     private String key;
 
     @Value("${RapidAPI.host}")
@@ -108,15 +108,9 @@ public class HotelServiceImpl implements HotelService {
                     .collect(Collectors.toList())
             ;
 
-            //System.out.println("hotelListEntities"+hotelListEntities.get(0).getDestinationId());
-
-            //getting destinationId
-            long destinationId = hotelListEntities.get(0).getDestinationId();
-            System.out.println(destinationId);
-
             //adding query parameters to properties/list
             UriComponentsBuilder builder1 = UriComponentsBuilder.fromHttpUrl(listPropertiesUrl)
-                    .queryParam("destinationId", destinationId);
+                    .queryParam("destinationId",hotelListEntities.get(0).getDestinationId());
 
             //getting response for properties/list
             ResponseEntity<HotelVO> hotelResponse = restTemplate.exchange(
@@ -240,10 +234,9 @@ public class HotelServiceImpl implements HotelService {
         );
         //adding price to HotelDTO
 
-        Period period=Period.between(hotelDTO.getCheckin(),hotelDTO.getCheckout());
-        int stayDuration= period.getDays()==0?1: period.getDays();
+        hotelDTO.setPrice(price);
 
-        hotelDTO.setPrice(price*getHotelPrice(stayDuration));
+        hotelDTO.setTotalPrice(getHotelPrice());
 
         return hotelDTO;
     }
@@ -272,7 +265,7 @@ public class HotelServiceImpl implements HotelService {
         hotelBookingEntity.setCheckout(hotelDTO.getCheckout());
         hotelBookingEntity.setHotelId(hotelDTO.getHotelId());
         hotelBookingEntity.setTravellers(hotelDTO.getTravellers());
-        hotelBookingEntity.setRoomrent(hotelDTO.getPrice());
+        hotelBookingEntity.setRoomrent(hotelDTO.getTotalPrice());
         hotelBookingEntity.setDuration(stayDuration);
         hotelBookingEntity.setBookingId(bookingId);
 
@@ -304,16 +297,10 @@ public class HotelServiceImpl implements HotelService {
         return hotelBookingRepository.findById(bookingId).orElse(null);
     }
 
-    public double getHotelPrice(int stayDuration){
-        if(stayDuration==0){
-            return hotelDTO.getRooms()* hotelDTO.getPrice();
-
-        }
-        else{
-            return  hotelDTO.getRooms()* hotelDTO.getPrice()*stayDuration;
-        }
-
-
+    public double getHotelPrice(){
+        Period period=Period.between(hotelDTO.getCheckin(),hotelDTO.getCheckout());
+        int stayDuration= period.getDays()==0?1: period.getDays();
+        return  hotelDTO.getRooms()* hotelDTO.getPrice()*stayDuration;
     }
 
     public HttpHeaders setHeader(){

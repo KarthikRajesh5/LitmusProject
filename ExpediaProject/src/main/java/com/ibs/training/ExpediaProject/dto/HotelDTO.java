@@ -5,13 +5,13 @@ import java.util.List;
 
 public class HotelDTO {
 
-    private LocalDate checkin;//
+    private LocalDate checkin;
 
-    private LocalDate checkout;//
+    private LocalDate checkout;
 
-    private int travellers;//
+    private int travellers;
 
-    private String hotelId; //pkey
+    private String hotelId;
 
     private String hotelName;
 
@@ -28,6 +28,16 @@ public class HotelDTO {
     private List<String> locationSection;
 
     private double price;
+
+    private double totalPrice;
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
     public LocalDate getCheckin() {
         return checkin;
