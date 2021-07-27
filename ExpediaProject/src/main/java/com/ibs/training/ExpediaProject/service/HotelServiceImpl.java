@@ -16,14 +16,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.Random;
 
 @Service
-public class HotelServiceImplementation implements HotelServices{
+public class HotelServiceImpl implements HotelService {
 
     @Value("${RapidAPI.Key}")
     private String key;
@@ -54,8 +51,8 @@ public class HotelServiceImplementation implements HotelServices{
     private HotelBookingRepository hotelBookingRepository;
 
     @Autowired
-    public HotelServiceImplementation(RestTemplate restTemplate,HotelDTO hotelDTO,UserServiceImpl userServiceImpl,
-                                      HotelBookingEntity hotelBookingEntity,HotelBookingRepository hotelBookingRepository){
+    public HotelServiceImpl(RestTemplate restTemplate, HotelDTO hotelDTO, UserServiceImpl userServiceImpl,
+                            HotelBookingEntity hotelBookingEntity, HotelBookingRepository hotelBookingRepository){
         this.restTemplate=restTemplate;
         this.hotelDTO=hotelDTO;
         this.userServiceImpl=userServiceImpl;
@@ -72,12 +69,8 @@ public class HotelServiceImplementation implements HotelServices{
                                        String rooms) {
 
         //setting Headers
-        HttpHeaders header = new HttpHeaders();
-        header.set("Content-Type", "application/json");
-        header.set("Accept", "application/json");
-        header.set("X-RapidAPI-Key", key);
-        header.set("X-RapidAPI-Host", host);
-        HttpEntity<String> entity = new HttpEntity<>(header);
+
+        HttpEntity<String> entity = new HttpEntity<>(setHeader());
 
         //Adding query parameters to location/search url
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(locationSearchUrl)
@@ -161,12 +154,7 @@ public class HotelServiceImplementation implements HotelServices{
     @Override
     public HotelDTO viewHotel(String id, String hotelName, String starRating, String address){
         //setting Headers
-        HttpHeaders header=new HttpHeaders();
-        header.set("Content-Type","application/json");
-        header.set("Accept","application/json");
-        header.set("X-RapidAPI-Key",key);
-        header.set("X-RapidAPI-Host",host);
-        HttpEntity<String> entity=new HttpEntity<>(header);
+        HttpEntity<String> entity=new HttpEntity<>(setHeader());
 
         /* convert starRating to integer and adding all to HotelDTO*/
         double rating=Double.parseDouble(starRating);
@@ -240,7 +228,6 @@ public class HotelServiceImplementation implements HotelServices{
         //adding loction section to HotelDTO
         hotelDTO.setLocationSection(locationSection);
 
-        System.out.println("-----------Location Section----------------");
         locationSection.forEach(System.out::println);
 
         //Price
@@ -252,7 +239,11 @@ public class HotelServiceImplementation implements HotelServices{
                 .getPlain()
         );
         //adding price to HotelDTO
-        hotelDTO.setPrice(price);
+
+        Period period=Period.between(hotelDTO.getCheckin(),hotelDTO.getCheckout());
+        int stayDuration= period.getDays()==0?1: period.getDays();
+
+        hotelDTO.setPrice(price*getHotelPrice(stayDuration));
 
         return hotelDTO;
     }
@@ -265,23 +256,14 @@ public class HotelServiceImplementation implements HotelServices{
         //get User
         String user= userServiceImpl.getUser();
         if(user.equals("anonymousUser")){
-            //to make unique username
             user="guest";
         }
+
         Period period=Period.between(hotelDTO.getCheckin(),hotelDTO.getCheckout());
-        int stayDuration= period.getDays();
-        double roomRent;
-        if(stayDuration==0){
-            roomRent=hotelDTO.getRooms()* hotelDTO.getPrice();
-            stayDuration=1;
-        }
-        else{
-            roomRent= hotelDTO.getRooms()* hotelDTO.getPrice()*stayDuration;
-        }
+        int stayDuration= period.getDays()==0?1: period.getDays();
 
         //generate booking id
         int random=new Random(1000).nextInt();
-        //int hashcode=hotelDTO.hashCode();
         String bookingId="bookingId".concat(String.valueOf(random)).concat(hotelDTO.getHotelId());
 
         //Adding booking details to HotelBookingEntity
@@ -290,7 +272,7 @@ public class HotelServiceImplementation implements HotelServices{
         hotelBookingEntity.setCheckout(hotelDTO.getCheckout());
         hotelBookingEntity.setHotelId(hotelDTO.getHotelId());
         hotelBookingEntity.setTravellers(hotelDTO.getTravellers());
-        hotelBookingEntity.setRoomrent(roomRent);
+        hotelBookingEntity.setRoomrent(hotelDTO.getPrice());
         hotelBookingEntity.setDuration(stayDuration);
         hotelBookingEntity.setBookingId(bookingId);
 
@@ -298,6 +280,49 @@ public class HotelServiceImplementation implements HotelServices{
         hotelBookingRepository.save(hotelBookingEntity);
 
         return hotelDTO;
+    }
+
+    //method to get hotel images
+    @Override
+    public List<String> getHotelImages(){
+        List<String> imageList=new ArrayList<>();
+        imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel1.jpg");
+        imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel2.jpg");
+        imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel3.jfif");
+        imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel4.webp");
+        imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel5.jpg");
+        imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel6.jpg");
+        imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel7.webp");
+        imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel8.jpg");
+        imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel9.webp");
+        imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel10.jpg");
+        return imageList;
+    }
+
+    @Override
+    public HotelBookingEntity getItinerary(String bookingId) {
+        return hotelBookingRepository.findById(bookingId).orElse(null);
+    }
+
+    public double getHotelPrice(int stayDuration){
+        if(stayDuration==0){
+            return hotelDTO.getRooms()* hotelDTO.getPrice();
+
+        }
+        else{
+            return  hotelDTO.getRooms()* hotelDTO.getPrice()*stayDuration;
+        }
+
+
+    }
+
+    public HttpHeaders setHeader(){
+        HttpHeaders header=new HttpHeaders();
+        header.set("Content-Type","application/json");
+        header.set("Accept","application/json");
+        header.set("X-RapidAPI-Key",key);
+        header.set("X-RapidAPI-Host",host);
+        return header;
     }
 
 
