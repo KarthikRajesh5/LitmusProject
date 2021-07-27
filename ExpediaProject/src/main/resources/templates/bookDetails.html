@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Book Success</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <style>
+        .table{
+            border-collapse: collapse;
+        }
+        body {
+            border-left: 20px solid white;
+        }
+    </style>
+</head>
+<body>
+
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Expedia Flight</a>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br><br><br>
+<div class="text-success">
+<h1 style="text-align:center">BOOKING SUCCESSFUL</h1>
+</div>
+<br><br>
+<!--<h2>Airline Info</h2>
+
+<h2 th:text="'Airlines Name : '+${flightBook.getAirlines()}"></h2>
+<h4 th:text="'Origin : '+${flightBook.getDepartureAirportCode()}"></h4>
+<h4 th:text="'Destination : '+${flightBook.getArrivalAirportCode()}"></h4>
+<h4 th:text="'Departure Date : '+${flightBook.getDepartureDate()}"></h4>
+<h4 th:text="'Departure Time : '+${flightBook.getDepartureTime()}"></h4>
+<h4 th:text="'Arrival Date : '+${flightBook.getArrivalDate()}"></h4>
+<h4 th:text="'Arrival Time : '+${flightBook.getArrivalTime()}"></h4>
+<h4 th:text="'Trip Duration : '+${flightBook.getTripDuration()}"></h4>
+<h4 th:text="'Cabin Class : '+${flightBook.getCabinClass()}"></h4>
+<h4 th:text="'Price : '+${flightBook.getPrice()}"></h4>-->
+
+<h4 style="text-align:center">Passenger Info</h4>
+
+<div>
+    <table class="table table-striped table-hover"
+           th:unless="${#lists.isEmpty(passenger)}" style="margin-top:30px">
+
+        <thead>
+        <tr class="table-active">
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Passport Number</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Travellers</th>
+            <th scope="col">Adults</th>
+            <th scope="col">Infants</th>
+        </tr>
+        </thead>
+
+        <tr th:each="flights:${passenger}">
+
+            <td th:text="${passenger.getFirstName()}"/>
+            <td th:text="${passenger.getLastName()}"/>
+            <td th:text="${passenger.getPassportNumber()}"/>
+            <td th:text="${passenger.getEmail()}"/>
+            <td th:text="${passenger.getAddress()}"/>
+            <td th:text="${passenger.getNoOfTravellers()}"/>
+            <td th:text="${passenger.getNoOfAdults()}"/>
+            <td th:text="${passenger.getNoOfInfants()}"/>
+        </tr>
+    </table>
+</div>
+
+<!--<h4 th:text="'Airlines Name : '+${passenger.getFirstName()}"></h4>
+<h4 th:text="'Origin : '+${passenger.getLastName()}"></h4>
+<h4 th:text="'Destination : '+${passenger.getPassportNumber()}"></h4>
+<h4 th:text="'Departure Date : '+${passenger.getEmail()}"></h4>
+<h4 th:text="'Departure Time : '+${passenger.getAddress()}"></h4>
+<h4 th:text="'Arrival Date : '+${passenger.getNoOfTravellers()}"></h4>
+<h4 th:text="'Arrival Time : '+${passenger.getNoOfAdults()}"></h4>
+<h4 th:text="'Trip Duration : '+${passenger.getNoOfInfants()}"></h4>-->
+
+</body>
+</html>
