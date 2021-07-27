@@ -1,5 +1,7 @@
 package com.ibs.training.ExpediaProject.securityconfiguration;
 
+import com.ibs.training.ExpediaProject.dto.FlightDTO;
+import com.ibs.training.ExpediaProject.dto.PassengerDTO;
 import com.ibs.training.ExpediaProject.service.UserService;
 import org.hibernate.bytecode.enhance.internal.tracker.NoopCollectionTracker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 
 
 @Configuration
@@ -25,6 +28,21 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter
 
     @Autowired
     private UserService userService;
+
+    @Bean
+    public FlightDTO flightDTO(){
+        return new FlightDTO();
+    }
+
+    @Bean
+    public PassengerDTO passengerDTO(){
+        return new PassengerDTO();
+    }
+
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -48,7 +66,7 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .authorizeRequests().antMatchers("/login","/registration").permitAll()
+                .authorizeRequests().antMatchers("/login","/registration","/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
