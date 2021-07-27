@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Details Page</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <style>
+        .table{
+            border-collapse: collapse;
+        }
+        body {
+            border-left: 210px solid white;
+
+        }
+        th{
+            border-left: 210px solid white;
+
+        }
+
+        .coln {
+            column-count: 2;
+            column-gap:2px;
+        }
+        .form-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            border: 3px solid green;
+        }
+    </style>
+</head>
+<body>
+<!-- create navigation baar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Expedia HotelSearch</a>
+
+        </div>
+    </div>
+</nav>
+<br/>
+<br/><br/>
+<h2 style="color:green" th:if="${booking}">Booking Successfull.!</h2>
+
+<img th:src="${hotelimage}" height="200" width="200" alt="hotels"  align="center">
+<h3 th:text="'Hotel Name : '+${hotelDetails.getHotelName()}"></h3>
+<h4 th:text="'Star Rating : '+${hotelDetails.getStarRating()}"></h4>
+<h4 th:text="'Address : '+${hotelDetails.getAddress()}"></h4>
+<h4 th:text="'Price : '+${hotelDetails.getTotalPrice()}"></h4>
+</div>
+<h3> Popular Amenities</h3>
+<div class="row">
+    <div class="coln" >
+        <div th:each="details:${hotelDetails.getPropertyAmenities()}">
+            <p th:text=" '=> '+${details}"></p>
+        </div>
+    </div><h3> Room Ameneties</h3>
+
+    <div class="coln" >
+        <div th:each="details:${hotelDetails.getRoomAmenities()}">
+            <p th:text="'=> '+${details}"></p>
+        </div>
+    </div>
+    <h3>NearBy places </h3>
+    <div class="coln" >
+        <div th:each="details:${hotelDetails.getLocationSection()}">
+            <p th:text=" '=> '+${details}"></p>
+        </div>
+
+        <form th:action="@{/hotels/booking(image=${hotelimage})}" method="post">
+        <div class="abc" style="text-align: left">
+            <button  type="submit" class="btn btn-primary">Book</button>
+        </div>
+</div>
+</form>
+</body>
+</html>

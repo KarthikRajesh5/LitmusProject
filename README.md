@@ -1,2 +1,0 @@
-# LitmusProject
-Litmus Training Project
