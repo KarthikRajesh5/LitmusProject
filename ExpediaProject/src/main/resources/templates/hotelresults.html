@@ -85,7 +85,8 @@
                 <a th:href="@{/hotels/details(id=${hotels.getId()},
                                            hotelName=${hotels.getName()},
                                            starRating=${hotels.getStarRating()},
-                                           address=${hotels.getAddress()})}">
+                                           address=${hotels.getAddress()},
+                                           image=${images.get(state.index)})}">
                     <img th:src="${images.get(state.index)}"
                     alt="hotel-image" style="border-radius:10%" width="180px" height="180px"/>
                 </a>

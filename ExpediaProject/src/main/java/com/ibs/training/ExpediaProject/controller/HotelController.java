@@ -59,6 +59,7 @@ public class HotelController {
                 imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel9.webp");
                 imageList.add("https://litmus-hotel-images-bucket.s3.us-east-2.amazonaws.com/hotel10.jpg");
                 model.addAttribute("images",imageList);
+
             }
             else {
                 model.addAttribute("error_message",true);
@@ -76,6 +77,7 @@ public class HotelController {
                             @RequestParam(required = false)  String hotelName,
                             @RequestParam(required = false)  String starRating,
                             @RequestParam(required = false)  String address,
+                            @RequestParam(required=false) String image,
                             Model model) {
         //get address , hotel name , StarRating, image url as request parameter
         System.out.println(id +" "+hotelName+" "+starRating+" "+address);
@@ -85,6 +87,7 @@ public class HotelController {
 //        }
         HotelDTO hotelDetails=hotelServiceImplementation.viewHotel(id,hotelName,starRating,address);
         model.addAttribute("hotelDetails",hotelDetails);
+        model.addAttribute("hotelimage",image);
         System.out.println(hotelDetails.toString());
         return "hoteldetails";
     }
@@ -92,18 +95,13 @@ public class HotelController {
 
     //Booking
     @PostMapping("/booking")
-    public String hotelBooking(Model model){
-        /*
-        *  ->find the logged in username
-        *  and set it to the HotelBooking DTO(using Spring Security)
-        *  ->save it to database
-        *  ->add  "booking successfully" as message in model
-        * ->redirect to ViewHotels page and display the message  */
+    public String hotelBooking(@RequestParam(required=false) String image,Model model){
 
         HotelDTO hotelDetails=hotelServiceImplementation.hotelBooking();
 
         model.addAttribute("booking",true);
         model.addAttribute("hotelDetails",hotelDetails);
+        model.addAttribute("hotelimage",image);
         booking=true;
 
         return "hoteldetails";
