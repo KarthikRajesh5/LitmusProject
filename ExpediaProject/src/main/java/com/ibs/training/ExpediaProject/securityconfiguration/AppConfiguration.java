@@ -57,11 +57,6 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter
     }
 
     @Bean
-    public RestTemplate restTemplate(){
-        return new RestTemplate();
-    }
-
-    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
