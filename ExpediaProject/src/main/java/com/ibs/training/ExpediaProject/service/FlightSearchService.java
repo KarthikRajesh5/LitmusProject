@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +57,9 @@ public class FlightSearchService {
 
     public List<FlightsVO> flightSearch(String departureAirport, String arrivalAirport, String departureDate) {
 
-        /*Setting Headers*/
+    /*    *//*GOOGLE FLIGHT SEARCH API*//*
+
+        *//*Setting Headers*//*
         org.springframework.http.HttpHeaders header = new HttpHeaders();
         header.set("Content-Type", "application/json");
         header.set("Accept", "application/json");
@@ -63,8 +67,8 @@ public class FlightSearchService {
         header.set("X-RapidAPI-Host", host);
         HttpEntity<String> entity = new HttpEntity<>(header);
 
-        /*API : Google Flights API*/
-        /*Passing the API URL and setting the querries*/
+        *//*API : Google Flights API*//*
+        *//*Passing the API URL and setting the querries*//*
 
         final String url = "https://google-flights-search.p.rapidapi.com/search";
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
@@ -79,7 +83,7 @@ public class FlightSearchService {
                 FlightResponseVO.class
         );
 
-        /*Showcasing the Flight Results from the API*/
+        *//*Showcasing the Flight Results from the API*//*
         List<FlightsVO> flightSearchResults;
         try {
             flightSearchResults = flightResponse.getBody().getFlights().stream().limit(7).collect(Collectors.toList());
@@ -97,6 +101,41 @@ public class FlightSearchService {
         } catch (NullPointerException e) {
             return null;
         }
+
+        return flightSearchResults;*/
+
+        /*HardCoding the values due to API service provider error*/
+        /*------------------Search Flights-----------------------*/
+
+        FlightResponseVO responseVO = new FlightResponseVO();
+
+        FlightsVO flightsVO = new FlightsVO();
+        flightsVO.setAirlines("Air India, Etihad, Singapore Airlines");
+        flightsVO.setDeparture_airport_code("COK");
+        flightsVO.setArrival_airport_code("SIN");
+        flightsVO.setDeparture_date("08/04/2021");
+        flightsVO.setDeparture_time("3:15 AM");
+        flightsVO.setArrival_date("08/05/2021");
+        flightsVO.setArrival_time("8:55 PM");
+        flightsVO.setTrip_duration("39 hr 10 min");
+        flightsVO.setCabin_class("Economy, Economy, Economy");
+        flightsVO.setPrice(9365.0);
+
+        List<FlightsVO> flightSearchResults = new ArrayList<>();
+        responseVO.setFlights(flightSearchResults);
+        flightSearchResults.add(flightsVO);
+
+        flightSearchResults.forEach(e -> System.out.println("Flight Name : " + e.getAirlines()
+                + " Departure Airport : " + e.getDeparture_airport_code()
+                + " Arrival Airport " + e.getArrival_airport_code()
+                + " Departure Date :" + e.getDeparture_date()
+                + " Departure Time :" + e.getDeparture_time()
+                + " Arrival Date :" + e.getArrival_date()
+                + " Arrival Time :" + e.getArrival_time()
+                + " Trip Duration :" + e.getTrip_duration()
+                + " Cabin Class :" + e.getCabin_class()
+                + " Price :" + e.getPrice()));
+
 
         return flightSearchResults;
     }
