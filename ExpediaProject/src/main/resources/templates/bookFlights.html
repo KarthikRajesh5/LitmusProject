@@ -7,6 +7,17 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
+    <style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            color: black;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
@@ -27,7 +38,7 @@
 </nav>
 
 <br>
-<br><br><br>
+<br><br>
 <h4 style = "text-align: left">Your Flight Status</h4>
 <div>
     <table class="table table-striped table-hover"
@@ -64,7 +75,7 @@
         </tr>
     </table>
 </div>
-<br><br>
+
 <!-- Create HTML registration form -->
 <div class="container">
     <div class="row">
@@ -131,6 +142,7 @@
         </div>
     </div>
 </div>
+<br><br><br>
 
 
 <!--<h2 th:text="'Airlines Name : '+${flightBook.getAirlines()}"></h2>
@@ -143,6 +155,10 @@
 <h4 th:text="'Trip Duration : '+${flightBook.getTripDuration()}"></h4>
 <h4 th:text="'Cabin Class : '+${flightBook.getCabinClass()}"></h4>
 <h4 th:text="'Price : '+${flightBook.getPrice()}"></h4>-->
+<div class="footer">
+    <p>© 2021 Expedia, Inc., an Expedia Group company / Expedia Asia Holdings Mauritius / BEX Travel Asia Pte. Ltd. All rights reserved. Expedia and the Airplane Logo are trademarks or registered trademarks of Expedia, Inc.</p>
+</div>
+
 </body>
 </html>
 
