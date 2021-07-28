@@ -65,6 +65,7 @@
             </form>
         </div>
     </div>
+    <br>
     <div class="row">
         <th:block th:if="${notFound !=null}">
             <div class="col-12">
@@ -75,7 +76,7 @@
         <th:block th:if="${searchFlightResults !=null}">
             <div class="row" style="margin-bottom: 10px">
                 <div class="center-block">
-                    <h3 style="text-align: center">Available Flights</h3>
+                    <h4 style="text-align: center">Available Flights</h4>
                 </div>
             </div>
         </th:block>
@@ -121,10 +122,10 @@
 
                 </td>
                 <td>
-                    <h4 style="display:inline" th:text="${flights.getDeparture_time()}"></h4>-<h4 style="display:inline" th:text="${flights.getArrival_time()}"></h4><br><br>
-                    <h5 style="display:inline" th:text="${flights.getDeparture_airport_code()}"></h5>-<h5 style="display:inline" th:text="${flights.getArrival_airport_code()}"></h5><br>
+                    <h4 style="display:inline;text-align:left" th:text="${flights.getDeparture_time()}"></h4>-<h4 style="display:inline;text-align:left" th:text="${flights.getArrival_time()}"></h4><br><br>
+                    <h5 style="display:inline;text-align:left" th:text="${flights.getDeparture_airport_code()}"></h5>-<h5 style="display:inline;text-align:left" th:text="${flights.getArrival_airport_code()}"></h5><br>
                     <h5 th:text="${flights.getAirlines()}" ></h5>
-                    <h5 style="text-align:center" th:text="${flights.getTrip_duration()}"></h5>
+                    <h5 style="text-align:left" th:text="${flights.getTrip_duration()}"></h5>
                     <h4 style="text-align:right" th:text="${flights.getPrice()}"></h4>
                 </td>
                 <!-- <td th:text="${flights.getAirlines()}"/>
